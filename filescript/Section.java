@@ -1,5 +1,7 @@
 package filescript;
 
+import filters.Filter;
+
 public class Section {
 	
 	// Data fields:

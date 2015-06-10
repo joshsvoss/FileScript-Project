@@ -14,7 +14,8 @@ public class Manager {
 		CommandParser parser =  new CommandParser(args[0], args[1]);
 		parser.parseCommands();
 		
-		
+		// TODO delete debug
+		System.out.println("Main done");
 	}
 
 }
