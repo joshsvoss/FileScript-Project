@@ -14,6 +14,11 @@ public class FilterFactory {
 		
 		//TODO Need to check for NOT param as well, before? 
 		
+		// Check for the parameter "NOT"
+		if (paramList[paramList.length - 1].equals("NOT")) { // TODO Does this need to be magic number?
+			// Then the filter needs to be negated.  Whatever filter it is:
+		}
+		
 		switch(paramList[FIRST_INDEX]){
 			case "greater_than":
 				// Make sure parameter list is long enough
@@ -28,8 +33,7 @@ public class FilterFactory {
 				
 				// Make sure param list is of correct length
 				if (paramList.length < 3) { //TODO magic number here and above
-					
-					
+					throw new InsufficientParamsException();
 				}
 				
 				return new BetweenFilter(paramList[PARAM_ONE_INDEX], paramList[PARAM_TWO_INDEX]);
