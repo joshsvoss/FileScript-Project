@@ -5,8 +5,8 @@ import java.io.File;
 public class BetweenFilter implements Filter {
 	
 	private static final int K_BYTES = 1024; 
-	int floor;
-	int roof;
+	private int floor;
+	private int roof;
 
 	public BetweenFilter(String floorString, String roofString) throws InvalidFilterParamException {
 		try {

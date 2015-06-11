@@ -12,6 +12,8 @@ public class FilterFactory {
 		// TODO ZEEV: to avoid repitition of expected number of params checking, should I 
 		// TODO check them canonically based on the number of args they expect?
 		
+		//TODO Need to check for NOT param as well, before? 
+		
 		switch(paramList[FIRST_INDEX]){
 			case "greater_than":
 				// Make sure parameter list is long enough
@@ -32,8 +34,14 @@ public class FilterFactory {
 				
 				return new BetweenFilter(paramList[PARAM_ONE_INDEX], paramList[PARAM_TWO_INDEX]);
 				  // TODO need to get rid of break statements, since they're unreachable?
+			
 			case "smaller_than":
-				return new SmallerThanFilter();
+				
+				if (paramList.length < 2) {
+					throw new InsufficientParamsException();
+				}
+				
+				return new SmallerThanFilter(paramList[PARAM_ONE_INDEX]);
 				
 			case "file":
 				return new FileFilter();
