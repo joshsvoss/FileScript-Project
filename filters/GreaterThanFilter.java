@@ -4,7 +4,7 @@ public class GreaterThanFilter implements Filter{
 	
 	int floor;
 	
-	public GreaterThanFilter(String floorString) { //TODO shoudl arg be String instead of int?
+	public GreaterThanFilter(String floorString) throws InvalidFilterParamException { 
 		
 		// Try to convert the string into an int, it it's not all numerical, 
 		// we have a  TypeI error

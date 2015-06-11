@@ -1,6 +1,6 @@
 package filescript;
 
-public class TypeIIException extends Exception {
+public class TypeIIException extends FileScriptException {
 
 	
 

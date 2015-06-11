@@ -6,7 +6,7 @@ public class FilterFactory {
 	private static final int FIRST_INDEX = 0;
 	private static final int PARAM_ONE = 1;
 
-	public static Filter buildFilter(String[] paramList) {
+	public static Filter buildFilter(String[] paramList) throws FileScriptException {
 		
 		switch(paramList[FIRST_INDEX]){
 			case "greater_than":

@@ -1,6 +1,6 @@
 package filescript;
 
-public class TypeIException extends Exception {
+public class TypeIException extends FileScriptException {
 
 	// TODO what's meaning?
 	private static final long serialVersionUID = 1L;
