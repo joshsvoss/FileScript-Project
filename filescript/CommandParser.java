@@ -1,6 +1,7 @@
 package filescript;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class CommandParser {
@@ -15,16 +16,18 @@ public class CommandParser {
 	public CommandParser(String cmdFilepath, String srcDirPath) {
 		// TODO should validation of passed in arguemnts be done here?  Or can parser assume that they're takin?
 		
-		// Make sure the the files exist and are the right type
-		File cmdFile = new File(cmdFilepath);
-		File srcDir = new File(srcDirPath); // File object can represent a directory too
+		this.cmdFilepath = cmdFilepath;
+		this.srcDirPath = srcDirPath;
+	
+		this.cmdFile = new File(cmdFilepath);
+		this.srcDir = new File(srcDirPath); // File object can represent a directory too
+	
+		
+		
 		
 		// Make sure the filepaths exist and can be used.
 		validateFilepaths();
-		
-		
-		this.cmdFilepath = cmdFilepath;
-		this.srcDirPath = srcDirPath;
+	
 		
 	}
 
@@ -48,10 +51,18 @@ public class CommandParser {
 		}
 	}
 	
-	public void parseCommands() { //TODO should this return boolean?
+	public void parseCommands() throws TypeIException { //TODO should this return boolean?
+		try {
+			Scanner cmdScanner = new Scanner(cmdFile);
+		}
+		catch (FileNotFoundException e) { // TODO the existence of the file is checked before.  Get rid of it above?
+			// If we're here, that means the file didn't exist
+			//TODO which exception is this?  My guess is type I
+			throw new TypeIException("The command file was not found"); //TODO should exception be more specific than just Type I?  
+		}
 		
-		Scanner cmdScanner = new Scanner(cmdFilepath);
-		
+		// But if we did succeed in finding the file, let's start to parse it.  
+			
 	}
 
 }
