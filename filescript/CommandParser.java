@@ -4,7 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import filters.FilterFactory;
+
 public class CommandParser {
+	
+	// Magic numbers
+	private static final String POUND_DELIMITER = "#";
 	
 	// Data fields:
 	String cmdFilepath;
@@ -65,7 +70,7 @@ public class CommandParser {
 		}
 		
 		// But if we did succeed in finding the file, let's start to parse it.  
-		cmdScanner.useDelimiter("#");
+		cmdScanner.useDelimiter(POUND_DELIMITER);
 		
 		while(cmdScanner.hasNext()) { // TODO change to hasNextLine?
 			
@@ -75,6 +80,17 @@ public class CommandParser {
 				// If the first line isn't FILTER, we have incorrect command file syntax
 				throw new BadCommandSyntax("First line of section isn't 'FILTER'.");
 			}
+			
+			// Otherwise though, we've just read over the FILTER line.
+			// Now let's see what filter we have:
+			if (!cmdScanner.hasNext()) {
+				throw new BadCommandSyntax("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right?
+			}
+			// Otherwise, split the filter line by the "#" delimiter
+			String filterLine = cmdScanner.nextLine();
+			String[] paramList = filterLine.split(POUND_DELIMITER);
+			FilterFactory.buildFilter(cmdScanner.next());
+			
 			
 		}
 		
