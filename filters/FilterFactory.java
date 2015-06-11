@@ -6,11 +6,11 @@ public class FilterFactory {
 		
 		switch(filterName){
 			case "greater_than":
-				return new GreaterThanFilter(); //TODO what about the param that needs to be someow passed to the filter, should it just be passed to the method?
+				return new GreaterThanFilter(); //TODO what about the param that needs to be somehow passed to the filter, should it just be passed to the method?
 				break;
 			case "between":
 				return new BetweenFilter();
-				break;
+				break;  // TODO need to get rid of break statements, since they're unreachable?
 			case "smaller_than":
 				return new SmallerThanFilter();
 				break;
