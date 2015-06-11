@@ -9,6 +9,9 @@ public class FilterFactory {
 
 	public static Filter buildFilter(String[] paramList) throws filescript.FileScriptException {
 		
+		// TODO ZEEV: to avoid repitition of expected number of params checking, should I 
+		// TODO check them canonically based on the number of args they expect?
+		
 		switch(paramList[FIRST_INDEX]){
 			case "greater_than":
 				// Make sure parameter list is long enough
@@ -27,7 +30,7 @@ public class FilterFactory {
 					
 				}
 				
-				return new BetweenFilter();
+				return new BetweenFilter(paramList[PARAM_ONE_INDEX], paramList[PARAM_TWO_INDEX]);
 				  // TODO need to get rid of break statements, since they're unreachable?
 			case "smaller_than":
 				return new SmallerThanFilter();
