@@ -1,6 +1,6 @@
 package filters;
 
-public interface Filter {
+public interface Filter { //TODO should This be an abstract class instead, to demand having a "boolean not" field?  But Tirgul says interface
 
 }
 
