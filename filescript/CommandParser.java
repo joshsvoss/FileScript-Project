@@ -51,18 +51,35 @@ public class CommandParser {
 		}
 	}
 	
-	public void parseCommands() throws TypeIException { //TODO should this return boolean?
+	public void parseCommands() throws TypeIIException { //TODO should this return boolean?
+		
+		Scanner cmdScanner;
+		
 		try {
-			Scanner cmdScanner = new Scanner(cmdFile);
+			cmdScanner = new Scanner(cmdFile);
 		}
 		catch (FileNotFoundException e) { // TODO the existence of the file is checked before.  Get rid of it above?
 			// If we're here, that means the file didn't exist
 			//TODO which exception is this?  My guess is type I
-			throw new TypeIException("The command file was not found"); //TODO should exception be more specific than just Type I?  
+			throw new TypeIIException("The command file was not found"); //TODO should exception be more specific than just Type I?  
 		}
 		
 		// But if we did succeed in finding the file, let's start to parse it.  
+		cmdScanner.useDelimiter("#");
+		
+		while(cmdScanner.hasNext()) { // TODO change to hasNextLine?
 			
+			// Read the first line, which must be "FILTER"
+			String firstSectionLine = cmdScanner.nextLine();
+			if (! firstSectionLine.equals("FILTER")) {  
+				// If the first line isn't FILTER, we have incorrect command file syntax
+				throw new BadCommandSyntax("First line of section isn't 'FILTER'.");
+			}
+			
+		}
+		
+		// Make sure to close stream before method exits:
+		cmdScanner.close();
 	}
 
 }

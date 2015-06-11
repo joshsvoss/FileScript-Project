@@ -11,8 +11,16 @@ public class Manager {
 			System.err.println("ERROR: not enough cmd ln arguments, please provide 2.");
 		}
 		
-		CommandParser parser =  new CommandParser(args[0], args[1]);
-		parser.parseCommands();
+		try {
+		
+			CommandParser parser =  new CommandParser(args[0], args[1]);
+			parser.parseCommands();
+		}
+		// Catch any uncaught typeIIExceptions that occur in the program flow.
+		catch(TypeIIException e2) {
+			System.out.println("ERROR");
+			System.exit(1);
+		}
 		
 		// TODO delete debug
 		System.out.println("Main done");
