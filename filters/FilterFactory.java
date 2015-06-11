@@ -2,11 +2,20 @@ package filters;
 
 public class FilterFactory {
 	
-	public static Filter buildFilter(String filterName) {
+	// Magic numbers
+	private static final int FIRST_INDEX = 0;
+	private static final int PARAM_ONE = 1;
+
+	public static Filter buildFilter(String[] paramList) {
 		
-		switch(filterName){
+		switch(paramList[FIRST_INDEX]){
 			case "greater_than":
-				return new GreaterThanFilter(); //TODO what about the param that needs to be somehow passed to the filter, should it just be passed to the method?
+				// Make sure parameter list is long enough
+				if (paramList.length < 2) { //TODO is extra parameters also not acceptable?
+					// TODO what exception gets thrown for incorrect number of filter parameters?
+				}
+					
+				return new GreaterThanFilter(paramList[PARAM_ONE]); //TODO what about the param that needs to be somehow passed to the filter, should it just be passed to the method?
 				break;
 			case "between":
 				return new BetweenFilter();
@@ -41,7 +50,7 @@ public class FilterFactory {
 			// Otherwise, we've got a string that doesn't match what we expect
 			default:
 				//TODO what exception is supposed to occur here?
-				break;
+				throw new BadFilterNameException();
 				
 				
 				
