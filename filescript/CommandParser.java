@@ -61,7 +61,47 @@ public class CommandParser {
 		Scanner cmdScanner;
 		
 		try {
-			cmdScanner = new Scanner(cmdFile);
+			cmdScanner = new Scanner(cmdFile); //TODO need to put entire parsing block inside try so the .close() can also be in the try?
+			
+			// But if we did succeed in finding the file, let's start to parse it.  
+			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
+			
+			while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
+				
+				// Read the first line, which must be "FILTER"
+				String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
+				if (! firstSectionLine.equals("FILTER")) {  
+					// If the first line isn't FILTER, we have incorrect command file syntax
+					cmdScanner.close();
+					throw new BadCommandSyntax("First line of section isn't 'FILTER'.");
+				}
+				
+				// Otherwise though, we've just read over the FILTER line.
+				// Now let's see what filter we have:
+				if (!cmdScanner.hasNext()) {
+					cmdScanner.close();
+					throw new BadCommandSyntax("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right?
+				}
+				// Otherwise, split the filter line by the "#" delimiter
+				String filterLine = cmdScanner.nextLine();
+				String[] paramList = filterLine.split(POUND_DELIMITER);
+				FilterFactory.buildFilter(paramList);
+				
+				// Let's get the order too, and put then in a Section
+				String orderLine = cmdScanner.nextLine();
+				if (!orderLine.equals("ORDER")) { // TODO ARE magic strings conisdered magic numbers?
+					// If the  line isn't ORDER, we have incorrect command file syntax
+					cmdScanner.close();
+					throw new BadCommandSyntax("Line following Filter secion ins't 'ORDER'");
+				}
+				//Otherwise, process the oder param line
+				String orderParamLine = cmdScanner.nextLine();
+				
+				
+			}
+			
+			// Make sure to close stream before method exits:
+			cmdScanner.close();
 		}
 		catch (FileNotFoundException e) { // TODO the existence of the file is checked before.  Get rid of it above?
 			// If we're here, that means the file didn't exist
@@ -69,33 +109,7 @@ public class CommandParser {
 			throw new TypeIIException("The command file was not found"); //TODO should exception be more specific than just Type I?  
 		}
 		
-		// But if we did succeed in finding the file, let's start to parse it.  
-		cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
 		
-		while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
-			
-			// Read the first line, which must be "FILTER"
-			String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
-			if (! firstSectionLine.equals("FILTER")) {  
-				// If the first line isn't FILTER, we have incorrect command file syntax
-				throw new BadCommandSyntax("First line of section isn't 'FILTER'.");
-			}
-			
-			// Otherwise though, we've just read over the FILTER line.
-			// Now let's see what filter we have:
-			if (!cmdScanner.hasNext()) {
-				throw new BadCommandSyntax("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right?
-			}
-			// Otherwise, split the filter line by the "#" delimiter
-			String filterLine = cmdScanner.nextLine();
-			String[] paramList = filterLine.split(POUND_DELIMITER);
-			FilterFactory.buildFilter(paramList);
-			
-			
-		}
-		
-		// Make sure to close stream before method exits:
-		cmdScanner.close();
 	}
 
 }
