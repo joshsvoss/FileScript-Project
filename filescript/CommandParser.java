@@ -107,7 +107,7 @@ public class CommandParser {
 				
 				// Now that you have the filter and Order, let's make a section out of them 
 				// And have the section print it's matching files in the correct order:
-				sectionArray[curSectionIndex] = new Section(filter, order);
+				sectionArray[curSectionIndex] = new Section(filter, order, srcDirPath); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
 				
 			}
 			
