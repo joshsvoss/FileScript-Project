@@ -2,14 +2,14 @@ package filters;
 
 public class GreaterThanFilter implements Filter{
 	
-	int floor;
+	double floor;
 	
 	public GreaterThanFilter(String floorString) throws InvalidFilterParamException { 
 		
 		// Try to convert the string into an int, it it's not all numerical, 
 		// we have a  TypeI error
 		try {
-			this.floor = Integer.parseInt(floorString);
+			this.floor = Double.parseDouble(floorString);
 		}
 		catch (NumberFormatException e) {
 			// If the string couldn't be converted into a number, throw up a TypeI exception

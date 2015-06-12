@@ -79,10 +79,31 @@ public class FilterFactory {
 					throw new InsufficientParamsException();
 				}
 				
-				filterToReturn = new FileFilter(paramList[PARAM_ONE_INDEX);
+				filterToReturn = new FileFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
+				
+				
 				
 			case "contains": 
-				return new ContainsFilter();
+				
+				if (paramList.length < 1) {
+					throw new InsufficientParamsException();
+				}
+				
+				filterToReturn = new ContainsFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
 				
 			case "prefix":
 				return new PrefixFilter();

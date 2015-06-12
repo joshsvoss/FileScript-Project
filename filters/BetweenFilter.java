@@ -5,13 +5,13 @@ import java.io.File;
 public class BetweenFilter implements Filter {
 	
 	private static final int K_BYTES = 1024; 
-	private int floor;
-	private int roof;
+	private double floor;
+	private double roof;
 
 	public BetweenFilter(String floorString, String roofString) throws InvalidFilterParamException {
 		try {
-			this.floor = Integer.parseInt(floorString) * K_BYTES;
-			this.roof = Integer.parseInt(roofString) * K_BYTES;
+			this.floor = Double.parseDouble(floorString) * K_BYTES;
+			this.roof = Double.parseDouble(roofString) * K_BYTES;
 		}
 		catch(NumberFormatException e) {
 			throw new InvalidFilterParamException("The param passed to the greater_then filter"

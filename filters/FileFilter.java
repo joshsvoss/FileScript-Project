@@ -4,7 +4,7 @@ import java.io.File;
 
 public class FileFilter implements Filter {
 	
-	String stringToMatch;
+	private String stringToMatch;
 
 	public FileFilter(String filename) throws InvalidFilterParamException {
 		//TODO should null just be matched to a blank filename, or should it be an exception?
@@ -21,7 +21,7 @@ public class FileFilter implements Filter {
 	public boolean doesPass(String filepath) {
 		//TODO is the string passed in a an absolute filepath or just relative?  Probably absolute I imagine
 		File file = new File(filepath);
-		return file.getName() == this.stringToMatch;
+		return file.getName().equals(this.stringToMatch);
 	}
 
 }

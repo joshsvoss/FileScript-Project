@@ -6,11 +6,11 @@ public class SmallerThanFilter implements Filter {
 	
 	private static final int K_BYTES = 1024; // TODO repitition, how can it share this with greater than and between?
 	
-	private int roof;
+	private double roof;
 	
 	public SmallerThanFilter(String roofString) throws InvalidFilterParamException {
 		try {
-			this.roof = Integer.parseInt(roofString) * K_BYTES;
+			this.roof = Double.parseDouble(roofString) * K_BYTES;
 		}
 		catch(NumberFormatException e) {
 			throw new InvalidFilterParamException();
