@@ -27,7 +27,7 @@ public class SizeOrder extends Order {
 			toReturn = 0;
 		}
 		
-		// Reverse result if neccesary:
+		// Reverse result if necessary:
 		if (this.reverse) {
 			toReturn = toReturn * -1;
 		}
