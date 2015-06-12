@@ -17,6 +17,11 @@ public class BetweenFilter implements Filter {
 			throw new InvalidFilterParamException("The param passed to the greater_then filter"
 					+ " wasn't fully numerical."); //TODO repitition with greater_than constructor. Maybe use some inheritance to combine common functionality?
 		}
+		
+		// Make sure size bounds aren't negative
+		if (this.roof < 0 || this.floor < 0) {
+			throw new InvalidFilterParamException("The size parameters for the filter can't be negative.");
+		}
 	}
 
 	@Override

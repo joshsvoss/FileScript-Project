@@ -16,6 +16,11 @@ public class GreaterThanFilter implements Filter{
 			throw new InvalidFilterParamException("The param passed to the greater_then filter"
 					+ " wasn't fully numerical."); //TODO maybe I don't need this string since I have a standard print out for typeI's anyway
 		}
+		
+		// Make sure size floor isn't negative
+		if (this.floor < 0) {
+			throw new InvalidFilterParamException("The size parameter for the filter can't be negative.");
+		}
 	}
 	
 	

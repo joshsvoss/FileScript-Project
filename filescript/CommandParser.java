@@ -70,12 +70,12 @@ public class CommandParser {
 		}
 		
 		// But if we did succeed in finding the file, let's start to parse it.  
-		cmdScanner.useDelimiter(POUND_DELIMITER);
+		cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
 		
-		while(cmdScanner.hasNext()) { // TODO change to hasNextLine?
+		while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
 			
 			// Read the first line, which must be "FILTER"
-			String firstSectionLine = cmdScanner.nextLine();
+			String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
 			if (! firstSectionLine.equals("FILTER")) {  
 				// If the first line isn't FILTER, we have incorrect command file syntax
 				throw new BadCommandSyntax("First line of section isn't 'FILTER'.");

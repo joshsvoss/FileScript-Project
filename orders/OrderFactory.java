@@ -10,8 +10,9 @@ public class OrderFactory {
 	/** This method builds the corresponding Order to the string given as argument.
 	 * @param orderName name of the order to be created.
 	 * @return an order of that type, it found.
+	 * @throws BadOrderNameException 
 	 */
-	public static Order buildOrder(String orderName) {
+	public static Order buildOrder(String orderName) throws BadOrderNameException {
 		
 		// Based on the name of the order create the corresponding Order instance
 		switch(orderName) {
@@ -26,9 +27,7 @@ public class OrderFactory {
 		
 		// Otherwise, the orderName doesn't match an order that we expect, 
 		default:
-			// TODO what exception should be thrown here?
-			
-			return null; // TODO dont' need this if I throw exception prior?
+			throw new BadOrderNameException();
 		
 		}
 	}
