@@ -12,6 +12,7 @@ public abstract class Order implements java.util.Comparator<File>{ //TODO do I h
 	protected boolean reverse;
 	
 	protected final static String REVERSE_STRING = "REVERSE";
+	protected final static int REVERSE_MULTIPLIER = -1;
 	
 	public Order(String reverseParam) {
 		

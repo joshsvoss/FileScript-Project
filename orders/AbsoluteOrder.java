@@ -6,11 +6,22 @@ import java.io.File;
  * @author Joshua Voss
  *
  */
-public class AbsoluteOrder implements Order {
+public class AbsoluteOrder extends Order {
+	
+	public AbsoluteOrder(String reverseParam) {
+		super(reverseParam);
+	}
 
 	@Override
 	public int compare(File f1, File f2) {
-		return f1.getAbsolutePath().compareTo(f2.getAbsolutePath());
+		int toReturn = f1.getAbsolutePath().compareTo(f2.getAbsolutePath());
+		
+		// Reverse result if neccesary:
+		if (this.reverse) {
+			toReturn = toReturn * -1;
+		}
+		
+		return toReturn;
 	}
 
 }
