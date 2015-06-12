@@ -9,7 +9,7 @@ public class NegFilter implements Filter{
 	}
 	
 	public boolean doesPass(String filepath) {
-		return ! containedFilter.doesPass(null);
+		return ! containedFilter.doesPass(filepath);
 	}
 
 }

@@ -21,6 +21,7 @@ public class FilterFactory {
 			isFilterNegated = true;
 		}
 		
+		Filter filterToReturn;
 		switch(paramList[FIRST_INDEX]){
 			case "greater_than":
 				// Make sure parameter list is long enough
@@ -28,7 +29,7 @@ public class FilterFactory {
 					// TODO DUAA: EXTRA parameters (besides having one extra for "not" cause type II error in school solution and program just exits
 					throw new InsufficientParamsException();
 				}
-				Filter filterToReturn = new GreaterThanFilter(paramList[PARAM_ONE_INDEX]);
+				filterToReturn = new GreaterThanFilter(paramList[PARAM_ONE_INDEX]);
 				
 				// If filter is to be negated, then put it inside the decorator NegFilter
 				if (isFilterNegated) {
@@ -43,7 +44,17 @@ public class FilterFactory {
 					throw new InsufficientParamsException();
 				}
 				
-				return new BetweenFilter(paramList[PARAM_ONE_INDEX], paramList[PARAM_TWO_INDEX]);
+				filterToReturn = new BetweenFilter(paramList[PARAM_ONE_INDEX], paramList[PARAM_TWO_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				return filterToReturn;
+				
+				
+				
+				
 				  // TODO need to get rid of break statements, since they're unreachable?
 			
 			case "smaller_than":
@@ -52,10 +63,23 @@ public class FilterFactory {
 					throw new InsufficientParamsException();
 				}
 				
-				return new SmallerThanFilter(paramList[PARAM_ONE_INDEX]);
+				filterToReturn = new SmallerThanFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
+				
 				
 			case "file":
-				return new FileFilter();
+				
+				if (paramList.length < 1) {
+					throw new InsufficientParamsException();
+				}
+				
+				filterToReturn = new FileFilter(paramList[PARAM_ONE_INDEX);
 				
 			case "contains": 
 				return new ContainsFilter();
