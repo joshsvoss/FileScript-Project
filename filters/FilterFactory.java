@@ -106,22 +106,87 @@ public class FilterFactory {
 				return filterToReturn;
 				
 			case "prefix":
-				return new PrefixFilter();
+				
+				if (paramList.length < 1) {
+					throw new InsufficientParamsException();
+				}
+				
+				filterToReturn = new PrefixFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
 				
 			case "suffix":
-				return new SuffixFilter();
+				
+				if (paramList.length < 1) {
+					throw new InsufficientParamsException();
+				}
+				
+				filterToReturn = new SuffixFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
+				
 				
 			case "writable":
-				return new WritableFilter();
+				if (paramList.length < 1) {
+					throw new InsufficientParamsException();
+				}
+				
+				filterToReturn = new WritableFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
 				
 			case "executable":
-				return new ExecutableFilter();
+				if (paramList.length < 1) {
+					throw new InsufficientParamsException();
+				}
+				
+				filterToReturn = new ExecutableFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
 				
 			case "hidden": 
-				return new HiddenFilter();
+				if (paramList.length < 1) {
+					throw new InsufficientParamsException();
+				}
+				
+				filterToReturn = new HiddenFilter(paramList[PARAM_ONE_INDEX]);
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
 				
 			case "all":
-				return new AllFilter();
+				filterToReturn = new AllFilter();
+				
+				// If filter is to be negated, then put it inside the decorator NegFilter
+				if (isFilterNegated) {
+					filterToReturn = new NegFilter(filterToReturn);  
+				}
+				
+				return filterToReturn;
 				
 			// Otherwise, we've got a string that doesn't match what we expect
 			default:
