@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import orders.Order;
 import orders.OrderFactory;
+import filters.Filter;
 import filters.FilterFactory;
 
 public class CommandParser {
@@ -63,10 +65,12 @@ public class CommandParser {
 		
 		try {
 			cmdScanner = new Scanner(cmdFile); //TODO need to put entire parsing block inside try so the .close() can also be in the try?
+			Section[] sectionArray = new Section[10]; //TODO where can I get the number of sections from?
 			
 			// But if we did succeed in finding the file, let's start to parse it.  
 			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
 			
+			int curSectionIndex = 0;
 			while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
 				
 				// Read the first line, which must be "FILTER"
@@ -86,7 +90,7 @@ public class CommandParser {
 				// Otherwise, split the filter line by the "#" delimiter
 				String filterLine = cmdScanner.nextLine();
 				String[] paramList = filterLine.split(POUND_DELIMITER);
-				FilterFactory.buildFilter(paramList);
+				Filter filter = FilterFactory.buildFilter(paramList);
 				
 				// Let's get the order too, and put then in a Section
 				String orderLine = cmdScanner.nextLine();
@@ -99,8 +103,11 @@ public class CommandParser {
 				String orderParamLine = cmdScanner.nextLine();
 				paramList = orderParamLine.split(POUND_DELIMITER);
 				// Pass the parameters on to the factory:
-				OrderFactory.buildOrder(paramList);
+				Order order = OrderFactory.buildOrder(paramList);
 				
+				// Now that you have the filter and Order, let's make a section out of them 
+				// And have the section print it's matching files in the correct order:
+				sectionArray[curSectionIndex] = new Section(filter, order);
 				
 			}
 			

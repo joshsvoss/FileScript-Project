@@ -13,5 +13,10 @@ public class Section {
 		this.filter = filter;
 		this.order = order;
 	}
+	
+	public void printSectionResults() { //TODO should this return boolean, or do we know for sure at this point, it no excpetion has been through that everything is kosher?
+		
+		
+	}
 
 }
