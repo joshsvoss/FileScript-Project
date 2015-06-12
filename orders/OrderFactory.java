@@ -7,12 +7,17 @@ package orders;
  */
 public class OrderFactory {
 	
+	// Magic numbers
+	private final static int ORDER_NAME_INDEX = 0;
+	
 	/** This method builds the corresponding Order to the string given as argument.
 	 * @param orderName name of the order to be created.
 	 * @return an order of that type, it found.
 	 * @throws BadOrderNameException 
 	 */
-	public static Order buildOrder(String orderName) throws BadOrderNameException {
+	public static Order buildOrder(String[] paramList) throws BadOrderNameException {
+		
+		String orderName = paramList[ORDER_NAME_INDEX];
 		
 		// Based on the name of the order create the corresponding Order instance
 		switch(orderName) {

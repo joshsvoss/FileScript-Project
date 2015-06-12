@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import orders.OrderFactory;
 import filters.FilterFactory;
 
 public class CommandParser {
@@ -96,6 +97,9 @@ public class CommandParser {
 				}
 				//Otherwise, process the oder param line
 				String orderParamLine = cmdScanner.nextLine();
+				paramList = orderParamLine.split(POUND_DELIMITER);
+				// Pass the parameters on to the factory:
+				OrderFactory.buildOrder(paramList);
 				
 				
 			}
