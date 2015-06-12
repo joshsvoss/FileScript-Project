@@ -13,8 +13,8 @@ public class HiddenFilter implements Filter {
 		}
 		
 		// Otherwise, 
-		this.yes = yesOrNo.equals("YES")
-;	}
+		this.yes = yesOrNo.equals("YES");	
+	}
 
 	@Override
 	public boolean doesPass(String filepath) { //TODO should this method expect a file instead of a filename?
