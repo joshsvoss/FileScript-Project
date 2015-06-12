@@ -3,6 +3,7 @@ package filescript;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ListIterator;
 
 import filters.Filter;
 import orders.Order;
@@ -32,7 +33,18 @@ public class Section {
 
 
 	private void storeMatchedFiles() {
-		// TODO Auto-generated method stub
+		// For each file in the source directory, if it passes the filter, 
+		// add it to the list.
+		File srcDirFile = new File(this.srcDir);
+		File[] fileArray = srcDirFile.listFiles();
+		
+		for (File curFile: fileArray) {
+			if (this.filter.doesPass(curFile.getAbsolutePath())) { //TODO seems silly to take the filepath of the File and pass that to something that will turn the filepath back into a File object
+				// Then add it to our data structure:
+				matchedFilesList.add(curFile);
+			}
+		}
+		
 		
 	}
 	
@@ -41,7 +53,12 @@ public class Section {
 	}
 	
 	private void printOrderedFiles() {
-		// TODO Auto-generated method stub
+		// Iterate through ordered list and print results
+		ListIterator<File> iterator = matchedFilesList.listIterator();
+		while(iterator.hasNext()) {
+			String filename = iterator.next().getName();
+			System.out.println(filename);
+		}
 		
 	}
 
