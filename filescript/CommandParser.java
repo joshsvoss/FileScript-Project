@@ -56,7 +56,7 @@ public class CommandParser {
 		}
 	}
 	
-	public void parseCommands() throws TypeIIException { //TODO should this return boolean?
+	public void parseCommands() throws FileScriptException { //TODO should this return boolean?
 		
 		Scanner cmdScanner;
 		
@@ -89,7 +89,7 @@ public class CommandParser {
 			// Otherwise, split the filter line by the "#" delimiter
 			String filterLine = cmdScanner.nextLine();
 			String[] paramList = filterLine.split(POUND_DELIMITER);
-			FilterFactory.buildFilter(cmdScanner.next());
+			FilterFactory.buildFilter(paramList);
 			
 			
 		}
