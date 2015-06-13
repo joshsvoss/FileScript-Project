@@ -21,7 +21,7 @@ public class CommandParser {
 	File cmdFile;
 	File srcDir;
 	
-	public CommandParser(String cmdFilepath, String srcDirPath) {
+	public CommandParser(String srcDirPath, String cmdFilepath) {
 		// TODO should validation of passed in arguemnts be done here?  Or can parser assume that they're takin?
 		
 		this.cmdFilepath = cmdFilepath;
@@ -108,6 +108,8 @@ public class CommandParser {
 				// Now that you have the filter and Order, let's make a section out of them 
 				// And have the section print it's matching files in the correct order:
 				sectionArray[curSectionIndex] = new Section(filter, order, srcDirPath); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
+				//TODO maybe I don't need an array of sections, I just run the current sections commands here
+				sectionArray[curSectionIndex].printSectionResults();
 				
 			}
 			
