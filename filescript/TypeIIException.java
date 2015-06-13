@@ -25,5 +25,13 @@ public class TypeIIException extends FileScriptException {
 		super(msg);
 	}
 	
+	/** This method prints out the error message
+	 * specified for TypeII errors.
+	 * 
+	 */
+	public void printErrorMessage() {
+		System.err.println("ERROR");
+	}
+	
 
 }

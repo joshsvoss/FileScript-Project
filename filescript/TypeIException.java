@@ -13,5 +13,12 @@ public class TypeIException extends FileScriptException {
 	public TypeIException(String msg) {
 		super(msg);
 	}
+	
+	/** This method prints out the error message specified for TypeI errors.
+	 * 
+	 */
+	public void printErrorMessage(int lineNum) {
+		System.err.println("Warning in line " + lineNum );
+	}
 
 }
