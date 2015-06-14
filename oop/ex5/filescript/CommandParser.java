@@ -23,8 +23,8 @@ public class CommandParser {
 	File cmdFile;
 	File srcDir;
 	
-	public CommandParser(String srcDirPath, String cmdFilepath) {
-		// TODO should validation of passed in arguemnts be done here?  Or can parser assume that they're takin?
+	public CommandParser(String srcDirPath, String cmdFilepath) throws TypeIIException {
+		
 		
 		this.cmdFilepath = cmdFilepath;
 		this.srcDirPath = srcDirPath;
@@ -43,21 +43,17 @@ public class CommandParser {
 
 	/** This helper method checks the filepaths to make sure they exist
 	 * and can be used.  
+	 * @throws TypeIIException 
 	 * 
 	 */
-	private void validateFilepaths() {
+	private void validateFilepaths() throws TypeIIException {
 		if (!cmdFile.isFile() || !srcDir.isDirectory()) { //TODO should we be ready to receive a file as the source directory?
-			//TODO what exception to happen here?
-			System.err.println("ERROR: the filepaths provided don't point to a" 
-					+ " file and directory.");
-			System.exit(1);
+			throw new TypeIIException();
 		}
 		
 		// Make sure cmdFile can be read:
 		if (!cmdFile.canRead()) {
-			// TODO what exception to throw here
-			System.err.println("ERROR: Command file can't be read.");
-			System.exit(1);
+			throw new TypeIIException();
 		}
 	}
 	
@@ -72,11 +68,13 @@ public class CommandParser {
 			// But if we did succeed in finding the file, let's start to parse it.  
 //			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
 			
-			int curSectionIndex = 0;
+			int curSectionIndex = 0;  //TODO delete if you don't end up using it
+			int lineNum = 0;
 			while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
 				
 				// Read the first line, which must be "FILTER"
 				String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
+				lineNum++;
 				if (! firstSectionLine.equals("FILTER")) {  
 					// If the first line isn't FILTER, we have incorrect command file syntax
 					cmdScanner.close();
@@ -85,26 +83,37 @@ public class CommandParser {
 				
 				// Otherwise though, we've just read over the FILTER line.
 				// Now let's see what filter we have:
-				if (!cmdScanner.hasNext()) {
+				if (!cmdScanner.hasNextLine()) {
 					cmdScanner.close();
 					throw new BadCommandSyntax("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right?
 				}
 				// Otherwise, split the filter line by the "#" delimiter
 				String filterLine = cmdScanner.nextLine();
+				lineNum++;
 				String[] paramList = filterLine.split(POUND_DELIMITER);
 				Filter filter = FilterFactory.buildFilter(paramList);
 				
 				// Let's get the order too, and put then in a Section
-				String orderLine = cmdScanner.nextLine();
-				if (!orderLine.equals("ORDER")) { // TODO ARE magic strings conisdered magic numbers?
-					// If the  line isn't ORDER, we have incorrect command file syntax
-					cmdScanner.close();
-					throw new BadCommandSyntax("Line following Filter secion ins't 'ORDER'");
+				if (cmdScanner.hasNextLine()) {
+					String orderLine = cmdScanner.nextLine();
+					lineNum++;
+					if (!orderLine.equals("ORDER")) { // TODO ARE magic strings conisdered magic numbers?
+						// If the  line isn't ORDER, we have incorrect command file syntax
+						cmdScanner.close();
+						throw new BadCommandSyntax("Line following Filter secion ins't 'ORDER'");
+					}
 				}
+				else {
+					cmdScanner.close();
+					throw new BadCommandSyntax("File ends before Order line.");
+				}
+				
+				
 				//Otherwise, process the oder param line
 				Order order;
 				if (cmdScanner.hasNextLine()) {
 					String orderParamLine = cmdScanner.nextLine();
+					lineNum++;
 					paramList = orderParamLine.split(POUND_DELIMITER);
 					// Pass the parameters on to the factory:
 					order = OrderFactory.buildOrder(paramList);
