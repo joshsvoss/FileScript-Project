@@ -2,6 +2,7 @@ package oop.ex5.filescript;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import orders.Order;
@@ -63,7 +64,7 @@ public class CommandParser {
 		
 		try {
 			cmdScanner = new Scanner(cmdFile); //TODO need to put entire parsing block inside try so the .close() can also be in the try?
-			Section[] sectionArray = new Section[100]; //TODO where can I get the number of sections from?  Not sure I need an array, can run each section inside loop
+			ArrayList<Section> sectionArray = new ArrayList<Section>(); //TODO where can I get the number of sections from?  Not sure I need an array, can run each section inside loop
 			
 			// But if we did succeed in finding the file, let's start to parse it.  
 //			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
@@ -131,10 +132,20 @@ public class CommandParser {
 				
 				// Now that you have the filter and Order, let's make a section out of them 
 				// And have the section print it's matching files in the correct order:
-				sectionArray[curSectionIndex] = new Section(filter, order, srcDirPath); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
-				//TODO maybe I don't need an array of sections, I just run the current sections commands here
-				sectionArray[curSectionIndex].printSectionResults();
+				sectionArray.add( new Section(filter, order, srcDirPath) ); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
 				
+				
+				
+			}
+			
+			// Now that we've initialized the sections and put them in an array, 
+			// Let's print out any neccesary warnings, and then have the sections print out their output
+			
+			//TODO put warning printing here
+			
+			while( ! sectionArray.isEmpty()) {
+				Section curSection = sectionArray.remove(0);
+				curSection.printSectionResults();
 			}
 			
 			// Make sure to close stream before method exits:
