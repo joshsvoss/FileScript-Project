@@ -20,7 +20,7 @@ public abstract class Order implements java.util.Comparator<File>{ //TODO do I h
 			this.reverse = false;
 		}
 		
-		if (!reverseParam.equals(REVERSE_STRING)) {
+		else if (!reverseParam.equals(REVERSE_STRING)) {
 			// Then we've got some invalid input,
 			throw new InvalidParameterException("In Order constructor, param was invalid.");
 		}

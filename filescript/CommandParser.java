@@ -13,6 +13,8 @@ public class CommandParser {
 	
 	// Magic numbers
 	private static final String POUND_DELIMITER = "#";
+	private static final String ABS_STRING = "abs";
+	
 	
 	// Data fields:
 	String cmdFilepath;
@@ -65,10 +67,10 @@ public class CommandParser {
 		
 		try {
 			cmdScanner = new Scanner(cmdFile); //TODO need to put entire parsing block inside try so the .close() can also be in the try?
-			Section[] sectionArray = new Section[10]; //TODO where can I get the number of sections from?
+			Section[] sectionArray = new Section[100]; //TODO where can I get the number of sections from?  Not sure I need an array, can run each section inside loop
 			
 			// But if we did succeed in finding the file, let's start to parse it.  
-			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
+//			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
 			
 			int curSectionIndex = 0;
 			while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
@@ -100,10 +102,23 @@ public class CommandParser {
 					throw new BadCommandSyntax("Line following Filter secion ins't 'ORDER'");
 				}
 				//Otherwise, process the oder param line
-				String orderParamLine = cmdScanner.nextLine();
-				paramList = orderParamLine.split(POUND_DELIMITER);
-				// Pass the parameters on to the factory:
-				Order order = OrderFactory.buildOrder(paramList);
+				Order order;
+				if (cmdScanner.hasNextLine()) {
+					String orderParamLine = cmdScanner.nextLine();
+					paramList = orderParamLine.split(POUND_DELIMITER);
+					// Pass the parameters on to the factory:
+					order = OrderFactory.buildOrder(paramList);
+					
+					
+				}
+				else {
+					// Then order is missing the param line
+					// Then resort to the default order, all
+					String[] defaultOrderList = {ABS_STRING}; 
+					order = OrderFactory.buildOrder(defaultOrderList);
+					
+					//TODO what kind of error does this count as?
+				}
 				
 				// Now that you have the filter and Order, let's make a section out of them 
 				// And have the section print it's matching files in the correct order:

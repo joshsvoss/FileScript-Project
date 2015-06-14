@@ -7,7 +7,8 @@ public class Manager {
 		// First validate the filepaths before you pass them on to the parser
 		//TODO How do I know the parser shouldn't validate the filepaths?  How do I know who should be responsible for what?
 		
-		if (args.length < 2) { //TODO is this to be assumed?  Throw exception instead?
+		//TODO is this to be assumed?  Throw exception instead?
+		if (args.length < 2) { 
 			System.err.println("ERROR: not enough cmd ln arguments, please provide 2.");
 		}
 		
