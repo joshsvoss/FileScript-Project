@@ -22,6 +22,13 @@ public class BetweenFilter implements Filter {
 		if (this.roof < 0 || this.floor < 0) {
 			throw new InvalidFilterParamException("The size parameters for the filter can't be negative.");
 		}
+		
+		// Also make sure that floor is indeed smaller than roof
+		if (this.floor > this.roof) {
+			throw new InvalidFilterParamException("The floor param was larger than the roof param "
+					+ "in the between filter");
+			
+		}
 	}
 
 	@Override
