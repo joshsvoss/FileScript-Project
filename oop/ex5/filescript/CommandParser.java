@@ -12,6 +12,8 @@ import filters.FilterFactory;
 
 public class CommandParser {
 	
+	private static final int CMD_FILE_INDEX = 1;
+	private static final int SRC_DIR_INDEX = 0;
 	// Magic numbers
 	private static final String POUND_DELIMITER = "#";
 	private static final String ABS_STRING = "abs";
@@ -24,11 +26,18 @@ public class CommandParser {
 	File cmdFile;
 	File srcDir;
 	
-	public CommandParser(String srcDirPath, String cmdFilepath) throws TypeIIException {
+	public CommandParser(String[] args) throws TypeIIException {
+		
+		if (args.length != 2) { 
+			TypeIIException e = new TypeIIException();
+			throw e;
+		}
+		
+		// Otherwise, we know we have enough args to assign them to our fields:
 		
 		
-		this.cmdFilepath = cmdFilepath;
-		this.srcDirPath = srcDirPath;
+		this.cmdFilepath = args[CMD_FILE_INDEX];
+		this.srcDirPath = args[SRC_DIR_INDEX];
 	
 		this.cmdFile = new File(cmdFilepath);
 		this.srcDir = new File(srcDirPath); // File object can represent a directory too
