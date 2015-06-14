@@ -12,7 +12,6 @@ public class MyFileScript {
 		// Catch any uncaught typeIIExceptions that occur in the program flow.
 		catch(TypeIIException e2) {
 			System.out.println("ERROR");
-			System.exit(1);
 		}
 		
 

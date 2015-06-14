@@ -1,22 +1,35 @@
 package filters;
 
+/** This class constructs the appropraite filter based on the 
+ * String array passed in.
+ * @author Joshua Voss
+ *
+ */
 public class FilterFactory {
+	
 	
 	// Magic numbers
 	private static final int FIRST_INDEX = 0;
 	private static final int PARAM_ONE_INDEX = 1;
 	private static final int PARAM_TWO_INDEX = 2;
+	private static final String NOT_STRING = "NOT";
 
-	public static Filter buildFilter(String[] paramList) throws oop.ex5.filescript.FileScriptException {
+	/** The Filter Factory constructor.
+	 * @param paramList this contains the name of the filter, and any parameters for it.
+	 * @return the filter that was created.  
+	 * @throws oop.ex5.filescript.TypeIException either at this level of the stack 
+	 * for having insufficient number of parameters, or re-throwing an exception 
+	 * thrown by the constructors for the parameters being invalid.  
+	 */
+	public static Filter buildFilter(String[] paramList) throws oop.ex5.filescript.TypeIException {
 		
 		// TODO ZEEV: to avoid repitition of expected number of params checking, should I 
 		// TODO check them canonically based on the number of args they expect?
 		
-		//TODO Need to check for NOT param as well, before? 
 		
 		// Check for the parameter "NOT"
 		boolean isFilterNegated = false;
-		if (paramList[paramList.length - 1].equals("NOT")) { // TODO Does this need to be magic number?  And can we assume that NOT will be in that spot?
+		if (paramList[paramList.length - 1].equals(NOT_STRING)) { // TODO Does this need to be magic number?  And can we assume that NOT will be in that spot?
 			// Then the filter needs to be negated.  Whatever filter it is:
 			isFilterNegated = true;
 		}
@@ -26,7 +39,7 @@ public class FilterFactory {
 			case "greater_than":
 				// Make sure parameter list is long enough
 				if (paramList.length < 2) { //TODO is extra parameters also not acceptable?
-					// TODO DUAA: EXTRA parameters (besides having one extra for "not" cause type II error in school solution and program just exits
+					// DUAA: EXTRA parameters (besides having one extra for "not" cause type II error in school solution and program just exits
 					throw new InsufficientParamsException();
 				}
 				filterToReturn = new GreaterThanFilter(paramList[PARAM_ONE_INDEX]);

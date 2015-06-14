@@ -2,10 +2,18 @@ package filters;
 
 import java.io.File;
 
+/** The File Filter, matches all files who have the same name name (excluding path).
+ * @author Joshua Voss
+ *
+ */
 public class FileFilter implements Filter {
 	
 	private String stringToMatch;
 
+	/** FileFilter constructor.  
+	 * @param filename the name to be matched to an identically-named file.
+	 * @throws InvalidFilterParamException thrown if the string filename is null.
+	 */
 	public FileFilter(String filename) throws InvalidFilterParamException {
 		//TODO should null just be matched to a blank filename, or should it be an exception?
 		if (filename == null) {
@@ -19,7 +27,6 @@ public class FileFilter implements Filter {
 
 	@Override
 	public boolean doesPass(String filepath) {
-		//TODO is the string passed in a an absolute filepath or just relative?  Probably absolute I imagine
 		File file = new File(filepath);
 		return file.getName().equals(this.stringToMatch);
 	}
