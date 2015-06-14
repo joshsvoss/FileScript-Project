@@ -8,6 +8,11 @@ import java.util.ListIterator;
 import filters.Filter;
 import orders.Order;
 
+/** This class implements the Section object, which contains a filter and an order,
+ * and prints out the names of files that match the filter, in the order of the contained order.  
+ * @author Joshua Voss
+ *
+ */
 public class Section {
 	
 	// Data fields:
@@ -16,6 +21,11 @@ public class Section {
 	String srcDir;
 	ArrayList<File> matchedFilesList; //TODO The comparator works with files, but you want your list containing filenames/paths not files?
 	
+	/** Full-arg constructor.  
+	 * @param filter the filter to be applied.
+	 * @param order the order of the printing of the files.
+	 * @param srcDir the path to the source directory that is to be explored.  
+	 */
 	public Section(Filter filter, Order order, String srcDir) {
 		this.filter = filter;
 		this.order = order;
@@ -24,7 +34,10 @@ public class Section {
 		this.matchedFilesList = new ArrayList<File>();
 	}
 	
-	public void printSectionResults() { //TODO should this return boolean, or do we know for sure at this point, it no excpetion has been through that everything is kosher?
+	/** This method prints the sorted filenames.
+	 * 
+	 */
+	public void printSectionResults() { 
 		storeMatchedFiles();
 		orderMatchedFiles();
 		printOrderedFiles();
@@ -32,6 +45,10 @@ public class Section {
 	}
 
 
+	/** This method stores the matched files in a collection, 
+	 * where they will soon be sorted.
+	 * 
+	 */
 	private void storeMatchedFiles() {
 		// For each file in the source directory, if it passes the filter, 
 		// add it to the list.
@@ -48,10 +65,16 @@ public class Section {
 		
 	}
 	
+	/** This method sorts the files stored in the collection.  
+	 * 
+	 */
 	private void orderMatchedFiles() {
 		Collections.sort(matchedFilesList, this.order);
 	}
 	
+	/** This method iterates through the files in order and prints their names to stdout.
+	 * 
+	 */
 	private void printOrderedFiles() {
 		// Iterate through ordered list and print results
 		ListIterator<File> iterator = matchedFilesList.listIterator();

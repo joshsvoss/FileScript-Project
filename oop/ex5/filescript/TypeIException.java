@@ -1,15 +1,25 @@
 package oop.ex5.filescript;
 
+/** TypeIExceptions are non fatal exceptions as defined in the spec for ex5.
+ * 
+ * They are to be caught, a warning printed, and the program continues.  
+ * @author Joshua Voss
+ *
+ */
 public class TypeIException extends FileScriptException {
 
-	// TODO what's meaning?
 	private static final long serialVersionUID = 1L;
 	
-	// TODO if I don't define a constructore, does java do the following for me automatically?  Call the super()?
+	/** Identical to that of the Exception class.
+	 * 
+	 */
 	public TypeIException() {
 		super();
 	}
 	
+	/** Identical to that of the Exception class.
+	 * @param msg Message to be sent up the stack with the exception.
+	 */
 	public TypeIException(String msg) {
 		super(msg);
 	}

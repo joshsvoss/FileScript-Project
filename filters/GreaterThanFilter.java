@@ -43,7 +43,7 @@ public class GreaterThanFilter implements Filter{
 	
 	@Override
 	public boolean doesPass(String filepath) {
-File file = new File(filepath);
+		File file = new File(filepath);
 		
 		// If file doesn't exist,
 		if (file.length() == 0L) { //TODO REPITITION here and in greatern than and between (size filters).  Maybce create abstract class for them to inherit from? make helper method for common code?

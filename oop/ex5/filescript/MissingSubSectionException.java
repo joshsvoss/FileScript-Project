@@ -1,5 +1,10 @@
 package oop.ex5.filescript;
 
+/** This exception is thrown when a section in the command file is missing 
+ * a subsection.  
+ * @author Joshua Voss
+ *
+ */
 public class MissingSubSectionException extends TypeIIException {
 
 

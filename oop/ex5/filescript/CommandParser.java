@@ -10,11 +10,16 @@ import orders.OrderFactory;
 import filters.Filter;
 import filters.FilterFactory;
 
+/** This class parses through the command file, and constructs the matching filters
+ * and orders through their respective factories.  
+ * @author Joshua Voss
+ *
+ */
 public class CommandParser {
-	
+
+	// Magic numbers
 	private static final int CMD_FILE_INDEX = 1;
 	private static final int SRC_DIR_INDEX = 0;
-	// Magic numbers
 	private static final String POUND_DELIMITER = "#";
 	private static final String ABS_STRING = "abs";
 	private static final String ALL_STRING = "all";
@@ -27,6 +32,10 @@ public class CommandParser {
 	File cmdFile;
 	File srcDir;
 	
+	/** Constructor method
+	 * @param args the command line args passed from the main().
+	 * @throws TypeIIException Thrown if the wrong number of args are passed in.  
+	 */
 	public CommandParser(String[] args) throws TypeIIException {
 		
 		if (args.length != 2) { 
@@ -35,16 +44,12 @@ public class CommandParser {
 		}
 		
 		// Otherwise, we know we have enough args to assign them to our fields:
-		
-		
-		this.cmdFilepath = args[CMD_FILE_INDEX];
 		this.srcDirPath = args[SRC_DIR_INDEX];
+		this.cmdFilepath = args[CMD_FILE_INDEX];
 	
-		this.cmdFile = new File(cmdFilepath);
 		this.srcDir = new File(srcDirPath); // File object can represent a directory too
+		this.cmdFile = new File(cmdFilepath);
 	
-		
-		
 		
 		// Make sure the filepaths exist and can be used.
 		validateFilepaths();
@@ -54,11 +59,12 @@ public class CommandParser {
 
 	/** This helper method checks the filepaths to make sure they exist
 	 * and can be used.  
-	 * @throws TypeIIException 
+	 * @throws TypeIIException if the command file can't be read or isn't a file or if 
+	 * srcDir isn't a directory.
 	 * 
 	 */
 	private void validateFilepaths() throws TypeIIException {
-		if (!cmdFile.isFile() || !srcDir.isDirectory()) { //TODO should we be ready to receive a file as the source directory?
+		if (!cmdFile.isFile() || !srcDir.isDirectory()) { 
 			throw new TypeIIException();
 		}
 		
@@ -68,19 +74,22 @@ public class CommandParser {
 		}
 	}
 	
-	public void parseCommands() throws FileScriptException { //TODO should this return boolean?
+	/** This method parses through the commands of the command file
+	 * and creates the necessary Sections, filled with a filter and order, and 
+	 * runs their printing method calls.
+	 * @throws FileScriptException if there are errors parsign the commands.  
+	 */
+	public void parseCommands() throws FileScriptException { 
 		
 		Scanner cmdScanner;
 		
 		try {
-			cmdScanner = new Scanner(cmdFile); //TODO need to put entire parsing block inside try so the .close() can also be in the try?
-			ArrayList<Section> sectionArray = new ArrayList<Section>(); //TODO where can I get the number of sections from?  Not sure I need an array, can run each section inside loop
+			cmdScanner = new Scanner(cmdFile); 
+			ArrayList<Section> sectionArray = new ArrayList<Section>(); 
 			
 			// But if we did succeed in finding the file, let's start to parse it.  
-//			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
-			
 			int lineNum = 0;
-			while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
+			while(cmdScanner.hasNextLine()) { 
 				
 				// Read the first line, which must be "FILTER"
 				String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
@@ -95,7 +104,7 @@ public class CommandParser {
 				// Now let's see what filter we have:
 				if (!cmdScanner.hasNextLine()) {
 					cmdScanner.close();
-					throw new MissingSubSectionException("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right?
+					throw new MissingSubSectionException("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right? New Exception called EarlyEndOfFileException?
 				}
 				// Otherwise, split the filter line by the "#" delimiter
 				String filterLine = cmdScanner.nextLine();
@@ -106,6 +115,8 @@ public class CommandParser {
 					filter = FilterFactory.buildFilter(paramList);
 				}
 				catch (TypeIException e) {
+					// If you have a problem constructing the filter with the given params,
+					// Make a default one:
 					e.printErrorMessage(lineNum);
 					String[] defaultFilterList = {ALL_STRING};
 					filter = FilterFactory.buildFilter(defaultFilterList);
@@ -115,7 +126,7 @@ public class CommandParser {
 				if (cmdScanner.hasNextLine()) {
 					String orderLine = cmdScanner.nextLine();
 					lineNum++;
-					if (!orderLine.equals("ORDER")) { // TODO ARE magic strings conisdered magic numbers?
+					if (!orderLine.equals("ORDER")) { // TODO ARE magic strings considered magic numbers?
 						// If the  line isn't ORDER, we have incorrect command file syntax
 						cmdScanner.close();
 						throw new MissingSubSectionException("Line following Filter secion isn't 'ORDER'");
@@ -162,9 +173,7 @@ public class CommandParser {
 			}
 			
 			// Now that we've initialized the sections and put them in an array, 
-			// Let's print out any neccesary warnings, and then have the sections print out their output
-			
-			//TODO put warning printing here
+			// have the sections print out their output
 			
 			while( ! sectionArray.isEmpty()) {
 				Section curSection = sectionArray.remove(0);
@@ -174,9 +183,8 @@ public class CommandParser {
 			// Make sure to close stream before method exits:
 			cmdScanner.close();
 		}
-		catch (FileNotFoundException e) { // TODO the existence of the file is checked before.  Get rid of it above?
+		catch (FileNotFoundException e) { 
 			// If we're here, that means the file didn't exist
-			//TODO which exception is this?  My guess is type I
 			throw new TypeIIException("The command file was not found"); //TODO should exception be more specific than just Type I?  
 		}
 		

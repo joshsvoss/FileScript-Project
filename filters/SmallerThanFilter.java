@@ -2,12 +2,21 @@ package filters;
 
 import java.io.File;
 
+/** This class implements the SmallerThanFilter.  It matches all files who's size is smaller
+ * than the specified roofString.  
+ * @author Joshua Voss
+ *
+ */
 public class SmallerThanFilter implements Filter {
 	
 	private static final int K_BYTES = 1024; // TODO repitition, how can it share this with greater than and between?
 	
 	private double roof;
 	
+	/** Constructor method.
+	 * @param roofString string to be converted into the maximum (exclusive) for the file size.
+	 * @throws InvalidFilterParamException thrown if the roofString is negative or null or not numeric.
+	 */
 	public SmallerThanFilter(String roofString) throws InvalidFilterParamException {
 		
 		// Make sure the roofString isn't null:
@@ -36,7 +45,7 @@ public class SmallerThanFilter implements Filter {
 		File file = new File(filepath);
 		
 		// If file doesn't exist,
-		if (file.length() == 0L) { //TODO REPITITION here and in greatern than and between (size filters).  Maybce create abstract class for them to inherit from? make helper method for common code?
+		if (file.length() == 0L) { 
 			return false;
 		}
 		else {

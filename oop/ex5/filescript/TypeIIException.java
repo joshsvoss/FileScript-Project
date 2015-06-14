@@ -1,12 +1,12 @@
 package oop.ex5.filescript;
 
+/** TypeIIExcpetions are fatal Exceptions as per the spec for ex5.
+ * @author Joshua Voss
+ *
+ */
 public class TypeIIException extends FileScriptException {
 
-	
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	/** No-args constructor for the TypeIIException.
@@ -14,7 +14,7 @@ public class TypeIIException extends FileScriptException {
 	 * 
 	 */
 	public TypeIIException() {
-		super(); //TODO is this redundant?
+		super(); 
 	}
 	
 	/** This constructor allows a message to be passed up the stack as the Exception 

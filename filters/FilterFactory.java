@@ -7,11 +7,10 @@ package filters;
  */
 public class FilterFactory {
 	
-	
+	// Magic numbers
 	private static final int ONE_PARAM = 1;
 	private static final int TWO_PARAMS = 2;
 	private static final int BETWEEN_NUM_PARAMS = 3;
-	// Magic numbers
 	private static final int FIRST_INDEX = 0;
 	private static final int PARAM_ONE_INDEX = 1;
 	private static final int PARAM_TWO_INDEX = 2;
