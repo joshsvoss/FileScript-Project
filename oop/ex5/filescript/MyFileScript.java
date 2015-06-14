@@ -21,9 +21,7 @@ public class MyFileScript {
 			System.exit(1);
 		}
 		
-		
-		// TODO delete debug
-		System.out.println("Main done");
+
 	}
 
 }

@@ -78,7 +78,6 @@ public class CommandParser {
 			// But if we did succeed in finding the file, let's start to parse it.  
 //			cmdScanner.useDelimiter(POUND_DELIMITER); //TODO DO I use this in the end?
 			
-			int curSectionIndex = 0;  //TODO delete if you don't end up using it
 			int lineNum = 0;
 			while(cmdScanner.hasNextLine()) { // TODO change to hasNextLine?
 				
@@ -126,8 +125,14 @@ public class CommandParser {
 					lineNum++;
 					paramList = orderParamLine.split(POUND_DELIMITER);
 					// Pass the parameters on to the factory:
-					order = OrderFactory.buildOrder(paramList);
-					
+					try {
+						order = OrderFactory.buildOrder(paramList);
+					}
+					catch (TypeIException e) {
+						e.printErrorMessage(lineNum);
+						String[] defaultOrderList = {ABS_STRING}; //TODO repitition here and below in the else
+						order = OrderFactory.buildOrder(defaultOrderList);
+					}
 					
 				}
 				else {
