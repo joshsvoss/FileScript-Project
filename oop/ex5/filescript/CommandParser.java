@@ -79,14 +79,14 @@ public class CommandParser {
 				if (! firstSectionLine.equals("FILTER")) {  
 					// If the first line isn't FILTER, we have incorrect command file syntax
 					cmdScanner.close();
-					throw new BadCommandSyntax("First line of section isn't 'FILTER'.");
+					throw new MissingSubSectionException("First line of section isn't 'FILTER'.");
 				}
 				
 				// Otherwise though, we've just read over the FILTER line.
 				// Now let's see what filter we have:
 				if (!cmdScanner.hasNextLine()) {
 					cmdScanner.close();
-					throw new BadCommandSyntax("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right?
+					throw new MissingSubSectionException("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right?
 				}
 				// Otherwise, split the filter line by the "#" delimiter
 				String filterLine = cmdScanner.nextLine();
@@ -101,12 +101,12 @@ public class CommandParser {
 					if (!orderLine.equals("ORDER")) { // TODO ARE magic strings conisdered magic numbers?
 						// If the  line isn't ORDER, we have incorrect command file syntax
 						cmdScanner.close();
-						throw new BadCommandSyntax("Line following Filter secion ins't 'ORDER'");
+						throw new MissingSubSectionException("Line following Filter secion isn't 'ORDER'");
 					}
 				}
 				else {
 					cmdScanner.close();
-					throw new BadCommandSyntax("File ends before Order line.");
+					throw new MissingSubSectionException("File ends before Order line.");
 				}
 				
 				
@@ -127,7 +127,7 @@ public class CommandParser {
 					String[] defaultOrderList = {ABS_STRING}; 
 					order = OrderFactory.buildOrder(defaultOrderList);
 					
-					//TODO what kind of error does this count as?
+					
 				}
 				
 				// Now that you have the filter and Order, let's make a section out of them 
