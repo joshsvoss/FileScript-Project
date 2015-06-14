@@ -24,7 +24,9 @@ public class SizeOrder extends Order {
 		}
 		// Otherwise, they're equal
 		else {
-			toReturn = 0;
+			// According to the spec, they should then be ordered by the abs order
+			AbsoluteOrder absOrder = new AbsoluteOrder(null);
+			toReturn = absOrder.compare(f1, f2);
 		}
 		
 		// Reverse result if necessary:

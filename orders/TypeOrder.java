@@ -15,6 +15,12 @@ public class TypeOrder extends Order {
 	public int compare(File f1, File f2) {
 		int toReturn = getType(f1).compareTo(getType(f2));
 		
+		// If they're equal, compare them using the AbsoluteOrder
+		if (toReturn == 0) {
+			AbsoluteOrder absOrder = new AbsoluteOrder(null);
+			toReturn = absOrder.compare(f1, f2);
+		}
+		
 		// Reverse result if neccesary:
 		if (this.reverse) {
 			toReturn = toReturn * -1;
