@@ -44,13 +44,9 @@ public class SmallerThanFilter implements Filter {
 		
 		File file = new File(filepath);
 		
-		// If file doesn't exist,
-		if (file.length() == 0L) { 
-			return false;
-		}
-		else {
-			return (file.length() < this.roof);
-		}
+		
+		return (file.length() < this.roof);
+		
 	}
 
 }

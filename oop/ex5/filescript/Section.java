@@ -16,20 +16,26 @@ import orders.Order;
 public class Section {
 	
 	// Data fields:
-	Filter filter;
-	Order order;
-	String srcDir;
-	ArrayList<File> matchedFilesList; //TODO The comparator works with files, but you want your list containing filenames/paths not files?
+	private Filter filter;
+	private Order order;
+	private String srcDir;
+	private ArrayList<File> matchedFilesList; 
+	// Fields for solving warning/error/files ordering
+	private int filterWarningLine;
+	private int orderWarningLine;
 	
 	/** Full-arg constructor.  
 	 * @param filter the filter to be applied.
 	 * @param order the order of the printing of the files.
 	 * @param srcDir the path to the source directory that is to be explored.  
 	 */
-	public Section(Filter filter, Order order, String srcDir) {
+	public Section(Filter filter, Order order, String srcDir, int filterWarningLine, int orderWarningLine) {
 		this.filter = filter;
 		this.order = order;
 		this.srcDir = srcDir;
+		//Ordering variables:
+		this.filterWarningLine = filterWarningLine;
+		this.orderWarningLine = orderWarningLine;
 		
 		this.matchedFilesList = new ArrayList<File>();
 	}
@@ -83,6 +89,15 @@ public class Section {
 	 * 
 	 */
 	private void printOrderedFiles() {
+		// First print warnings if any exist (if line number is greater than 0)
+		// And then print the files:
+		if (this.filterWarningLine > 0) {
+			System.err.println("Warning in line " + this.filterWarningLine);
+		}
+		if (this.orderWarningLine > 0) {
+			System.err.println("Warning in line " + this.orderWarningLine);
+		}
+		
 		// Iterate through ordered list and print results
 		ListIterator<File> iterator = matchedFilesList.listIterator();
 		while(iterator.hasNext()) {

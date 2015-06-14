@@ -8,8 +8,9 @@ import java.io.File;
  */
 public class GreaterThanFilter implements Filter{
 	
+	private static final int K_BYTES = 1024;
 	private static final int ZERO = 0;
-	double floor;
+	private double floor;
 	
 	/** The constructor method.  
 	 * @param floorString converted to a double and is the minimum size for matching files 
@@ -26,7 +27,7 @@ public class GreaterThanFilter implements Filter{
 		// Try to convert the string into an int, it it's not all numerical, 
 		// we have a  TypeI error
 		try {
-			this.floor = Double.parseDouble(floorString);
+			this.floor = Double.parseDouble(floorString) * K_BYTES ;
 		}
 		catch (NumberFormatException e) {
 			// If the string couldn't be converted into a number, throw up a TypeI exception
@@ -44,14 +45,10 @@ public class GreaterThanFilter implements Filter{
 	@Override
 	public boolean doesPass(String filepath) {
 		File file = new File(filepath);
+
+		boolean toReturn = (file.length() > this.floor);
+		return toReturn;
 		
-		// If file doesn't exist,
-		if (file.length() == 0L) { //TODO REPITITION here and in greatern than and between (size filters).  Maybce create abstract class for them to inherit from? make helper method for common code?
-			return false;
-		}
-		else {
-			return (file.length() > this.floor);
-		}
 	}
 
 }

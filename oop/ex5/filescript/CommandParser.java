@@ -79,7 +79,7 @@ public class CommandParser {
 	 * runs their printing method calls.
 	 * @throws FileScriptException if there are errors parsign the commands.  
 	 */
-	public void parseCommands() throws FileScriptException { 
+	public ArrayList<Section> parseCommands() throws FileScriptException { 
 		
 		Scanner cmdScanner;
 		
@@ -90,6 +90,8 @@ public class CommandParser {
 			// But if we did succeed in finding the file, let's start to parse it.  
 			int lineNum = 0;
 			boolean alreadySawFilter = false;
+			int filterWarningLine = 0;
+			int orderWarningLine = 0;
 			while(cmdScanner.hasNextLine()) { 
 				
 				if (alreadySawFilter == false) {
@@ -125,7 +127,8 @@ public class CommandParser {
 				catch (TypeIException e) {
 					// If you have a problem constructing the filter with the given params,
 					// Make a default one:
-					e.printErrorMessage(lineNum);
+//					e.printErrorMessage(lineNum); //TODO delete?
+					filterWarningLine = lineNum;
 					String[] defaultFilterList = {ALL_STRING};
 					filter = FilterFactory.buildFilter(defaultFilterList);
 					
@@ -166,7 +169,8 @@ public class CommandParser {
 							order = OrderFactory.buildOrder(paramList);
 						}
 						catch (TypeIException e) {
-							e.printErrorMessage(lineNum);
+//							e.printErrorMessage(lineNum); //TODO delete?
+							orderWarningLine = lineNum;
 							String[] defaultOrderList = {ABS_STRING}; //TODO repitition here and below in the else
 							order = OrderFactory.buildOrder(defaultOrderList);
 						}
@@ -186,13 +190,16 @@ public class CommandParser {
 				// Now that you have the filter and Order, let's make a section out of them 
 				// And have the section print it's matching files in the correct order:
 				
-				Section curSection = new Section(filter, order, srcDirPath);
-				curSection.printSectionResults();
+				Section curSection = new Section(filter, order, srcDirPath, filterWarningLine, 
+						orderWarningLine);
+//				curSection.printSectionResults(); //TODO Delete?
 				//TODO DELTE what's below?
-//				sectionArray.add( new Section(filter, order, srcDirPath) ); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
+				sectionArray.add( curSection ); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
 				
 				
-				
+				// Reset the warning line numbers to 0:
+				filterWarningLine = 0;
+				orderWarningLine = 0;
 			}
 			
 			// Now that we've initialized the sections and put them in an array, 
@@ -205,6 +212,8 @@ public class CommandParser {
 //			
 			// Make sure to close stream before method exits:
 			cmdScanner.close();
+
+			return sectionArray;
 		}
 		catch (FileNotFoundException e) { 
 			// If we're here, that means the file didn't exist

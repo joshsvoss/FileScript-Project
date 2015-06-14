@@ -17,7 +17,8 @@ public class NegFilter implements Filter{
 	
 	@Override
 	public boolean doesPass(String filepath) {
-		return ! containedFilter.doesPass(filepath);
+		boolean toReturn = ! containedFilter.doesPass(filepath);
+		return toReturn;
 	}
 
 }
