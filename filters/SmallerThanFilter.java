@@ -34,7 +34,7 @@ public class SmallerThanFilter implements Filter {
 			return false;
 		}
 		else {
-			return (file.length() <= this.roof);
+			return (file.length() < this.roof);
 		}
 	}
 

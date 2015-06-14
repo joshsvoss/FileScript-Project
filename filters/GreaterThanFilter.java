@@ -1,5 +1,7 @@
 package filters;
 
+import java.io.File;
+
 public class GreaterThanFilter implements Filter{
 	
 	double floor;
@@ -26,8 +28,15 @@ public class GreaterThanFilter implements Filter{
 	
 	@Override
 	public boolean doesPass(String filepath) {
-		// TODO Auto-generated method stub
-		return false;
+File file = new File(filepath);
+		
+		// If file doesn't exist,
+		if (file.length() == 0L) { //TODO REPITITION here and in greatern than and between (size filters).  Maybce create abstract class for them to inherit from? make helper method for common code?
+			return false;
+		}
+		else {
+			return (file.length() > this.floor);
+		}
 	}
 
 }
