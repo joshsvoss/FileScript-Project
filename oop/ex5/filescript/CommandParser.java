@@ -17,6 +17,7 @@ public class CommandParser {
 	// Magic numbers
 	private static final String POUND_DELIMITER = "#";
 	private static final String ABS_STRING = "abs";
+	private static final String ALL_STRING = "all";
 	
 	
 	// Data fields:
@@ -100,8 +101,16 @@ public class CommandParser {
 				String filterLine = cmdScanner.nextLine();
 				lineNum++;
 				String[] paramList = filterLine.split(POUND_DELIMITER);
-				Filter filter = FilterFactory.buildFilter(paramList);
-				
+				Filter filter;
+				try {
+					filter = FilterFactory.buildFilter(paramList);
+				}
+				catch (TypeIException e) {
+					e.printErrorMessage(lineNum);
+					String[] defaultFilterList = {ALL_STRING};
+					filter = FilterFactory.buildFilter(defaultFilterList);
+					
+				}
 				// Let's get the order too, and put then in a Section
 				if (cmdScanner.hasNextLine()) {
 					String orderLine = cmdScanner.nextLine();
