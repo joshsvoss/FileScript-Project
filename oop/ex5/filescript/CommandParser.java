@@ -89,17 +89,25 @@ public class CommandParser {
 			
 			// But if we did succeed in finding the file, let's start to parse it.  
 			int lineNum = 0;
+			boolean alreadySawFilter = false;
 			while(cmdScanner.hasNextLine()) { 
 				
-				// Read the first line, which must be "FILTER"
-				String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
-				lineNum++;
-				if (! firstSectionLine.equals("FILTER")) {  
-					// If the first line isn't FILTER, we have incorrect command file syntax
-					cmdScanner.close();
-					throw new MissingSubSectionException("First line of section isn't 'FILTER'.");
+				if (alreadySawFilter == false) {
+					// Read the first line, which must be "FILTER"
+					String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
+					lineNum++;
+					if (!firstSectionLine.equals("FILTER")) {
+						// If the first line isn't FILTER, we have incorrect command file syntax
+						cmdScanner.close();
+						throw new MissingSubSectionException(
+								"First line of section isn't 'FILTER'.");
+					}
+
 				}
-				
+				else {
+					lineNum++;
+				}
+				alreadySawFilter = false;
 				// Otherwise though, we've just read over the FILTER line.
 				// Now let's see what filter we have:
 				if (!cmdScanner.hasNextLine()) {
@@ -142,16 +150,27 @@ public class CommandParser {
 				Order order;
 				if (cmdScanner.hasNextLine()  ) {
 					String orderParamLine = cmdScanner.nextLine();
-					lineNum++;
-					paramList = orderParamLine.split(POUND_DELIMITER);
-					// Pass the parameters on to the factory:
-					try {
-						order = OrderFactory.buildOrder(paramList);
-					}
-					catch (TypeIException e) {
-						e.printErrorMessage(lineNum);
-						String[] defaultOrderList = {ABS_STRING}; //TODO repitition here and below in the else
+					
+					if(orderParamLine.equals("FILTER")) {
+						// Then order is missing the param line
+						// Then resort to the default order, all
+						String[] defaultOrderList = {ABS_STRING}; 
 						order = OrderFactory.buildOrder(defaultOrderList);
+						alreadySawFilter = true;
+					}
+					else {
+						lineNum++;
+						paramList = orderParamLine.split(POUND_DELIMITER);
+						// Pass the parameters on to the factory:
+						try {
+							order = OrderFactory.buildOrder(paramList);
+						}
+						catch (TypeIException e) {
+							e.printErrorMessage(lineNum);
+							String[] defaultOrderList = {ABS_STRING}; //TODO repitition here and below in the else
+							order = OrderFactory.buildOrder(defaultOrderList);
+						}
+					
 					}
 					
 				}

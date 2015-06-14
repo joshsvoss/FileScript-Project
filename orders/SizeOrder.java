@@ -42,7 +42,7 @@ public class SizeOrder extends Order {
 		
 		// Reverse result if necessary:
 		if (this.reverse) {
-			toReturn = toReturn * -1;
+			toReturn = toReturn * REVERSE_MULTIPLIER;
 		}
 		
 		return toReturn;
