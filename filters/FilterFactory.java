@@ -7,7 +7,7 @@ public class FilterFactory {
 	private static final int PARAM_ONE_INDEX = 1;
 	private static final int PARAM_TWO_INDEX = 2;
 
-	public static Filter buildFilter(String[] paramList) throws filescript.FileScriptException {
+	public static Filter buildFilter(String[] paramList) throws oop.ex5.filescript.FileScriptException {
 		
 		// TODO ZEEV: to avoid repitition of expected number of params checking, should I 
 		// TODO check them canonically based on the number of args they expect?

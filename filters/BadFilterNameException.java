@@ -1,6 +1,6 @@
 package filters;
 
-import filescript.TypeIException;
+import oop.ex5.filescript.TypeIException;
 
 public class BadFilterNameException extends TypeIException {
 

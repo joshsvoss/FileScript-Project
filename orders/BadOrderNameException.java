@@ -1,6 +1,6 @@
 package orders;
 
-import filescript.TypeIException;
+import oop.ex5.filescript.TypeIException;
 
 public class BadOrderNameException extends TypeIException {
 	

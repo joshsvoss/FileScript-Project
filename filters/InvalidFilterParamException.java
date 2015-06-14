@@ -1,6 +1,6 @@
 package filters;
 
-public class InvalidFilterParamException extends filescript.TypeIException {
+public class InvalidFilterParamException extends oop.ex5.filescript.TypeIException {
 	
 	private static final long serialVersionUID = 1L;
 

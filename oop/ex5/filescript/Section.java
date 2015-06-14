@@ -1,4 +1,4 @@
-package filescript;
+package oop.ex5.filescript;
 
 import java.io.File;
 import java.util.ArrayList;

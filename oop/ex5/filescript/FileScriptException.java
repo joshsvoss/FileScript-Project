@@ -1,4 +1,4 @@
-package filescript;
+package oop.ex5.filescript;
 
 /** An exception specific to this filescript project.  This exception will either be of
  * typeI or typeII.

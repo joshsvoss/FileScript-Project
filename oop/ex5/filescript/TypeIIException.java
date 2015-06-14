@@ -1,4 +1,4 @@
-package filescript;
+package oop.ex5.filescript;
 
 public class TypeIIException extends FileScriptException {
 
