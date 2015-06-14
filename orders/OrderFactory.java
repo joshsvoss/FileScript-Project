@@ -31,8 +31,10 @@ public class OrderFactory {
 		case "abs":
 			return new AbsoluteOrder(reverseParam);
 			// No "break" is needed here (it would be unreachable due to return)
+			
 		case "type":
 			return new TypeOrder(reverseParam);
+			
 		case "size":
 			return new SizeOrder(reverseParam);
 		

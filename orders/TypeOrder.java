@@ -2,6 +2,10 @@ package orders;
 
 import java.io.File;
 
+/** The type order sorts files by their file extension, alphabetically.
+ * @author Joshua Voss
+ *
+ */
 public class TypeOrder extends Order {
 	// Magic numbers
 	private static final int OFFSET_ONE = 1;
@@ -29,6 +33,10 @@ public class TypeOrder extends Order {
 		return toReturn;
 	}
 	
+	/** This helper method returns the file extension of a filanme.  
+	 * @param file
+	 * @return
+	 */
 	private static String getType(File file) {
 		String name = file.getName();
 		int periodIndex = name.lastIndexOf(PERIOD);

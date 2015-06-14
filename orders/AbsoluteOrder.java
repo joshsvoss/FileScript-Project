@@ -8,6 +8,9 @@ import java.io.File;
  */
 public class AbsoluteOrder extends Order {
 	
+	/** Constructor method
+	 * @param reverseParam This String, if  == "REVERSE" will reverse the order of the sorting.  
+	 */
 	public AbsoluteOrder(String reverseParam) {
 		super(reverseParam);
 	}
@@ -18,7 +21,7 @@ public class AbsoluteOrder extends Order {
 		
 		// Reverse result if neccesary:
 		if (this.reverse) {
-			toReturn = toReturn * -1;
+			toReturn = toReturn * REVERSE_MULTIPLIER;
 		}
 		
 		return toReturn;

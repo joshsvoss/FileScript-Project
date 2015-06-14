@@ -2,8 +2,15 @@ package orders;
 
 import java.io.File;
 
+/** The SizeOrder object organizes files by their size.  
+ * @author Joshua Voss
+ *
+ */
 public class SizeOrder extends Order {
 	
+	/** This constructor calls the parent Order() constructor.
+	 * @param reverseParam whther or not the order is to be reversed.  
+	 */
 	public SizeOrder(String reverseParam) {
 		super(reverseParam);
 	}
@@ -11,6 +18,10 @@ public class SizeOrder extends Order {
 
 	// TODO should I be returning bigger number depending on the size of the difference?  
 	// TODO is there a way to use a compareTo() of the longs returned?
+	/* This method is demanded by the interface Comparator and allows this comparator
+	 * to be used in Collections.sort().
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	public int compare(File f1, File f2) {
 		
@@ -39,6 +50,5 @@ public class SizeOrder extends Order {
 	}
 	
 	
-	// TODO why isn't eclipse requiring me to implement equals() as well? Cuz it's implemented at Object?
 
 }
