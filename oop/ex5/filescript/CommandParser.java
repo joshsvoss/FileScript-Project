@@ -166,7 +166,11 @@ public class CommandParser {
 				
 				// Now that you have the filter and Order, let's make a section out of them 
 				// And have the section print it's matching files in the correct order:
-				sectionArray.add( new Section(filter, order, srcDirPath) ); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
+				
+				Section curSection = new Section(filter, order, srcDirPath);
+				curSection.printSectionResults();
+				//TODO DELTE what's below?
+//				sectionArray.add( new Section(filter, order, srcDirPath) ); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
 				
 				
 				
@@ -174,12 +178,12 @@ public class CommandParser {
 			
 			// Now that we've initialized the sections and put them in an array, 
 			// have the sections print out their output
-			
-			while( ! sectionArray.isEmpty()) {
-				Section curSection = sectionArray.remove(0);
-				curSection.printSectionResults();
-			}
-			
+			//TODO BELOW CAN NOW BE DELETED?
+//			while( ! sectionArray.isEmpty()) {
+//				Section curSection = sectionArray.remove(0);
+//				curSection.printSectionResults();
+//			}
+//			
 			// Make sure to close stream before method exits:
 			cmdScanner.close();
 		}
