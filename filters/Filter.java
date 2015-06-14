@@ -1,8 +1,17 @@
 package filters;
 
-public interface Filter { //TODO should This be an abstract class instead, to demand having a "boolean not" field?  But Tirgul says interface
+/** This interface provides an api for all of the filter classes
+ * that implement it.
+ * @author Joshua Voss
+ *
+ */
+public interface Filter { 
 	
+	/** This method matches files to the specified filter.
+	 * @param filepath the path to the file to be matched.
+	 * @return true if the file matches the filter, false otherwise.
+	 */
 	public boolean doesPass(String filepath);
 }
 
-// TODO should rest of real filters go in this file, or doesn't classname need to match filename?
+

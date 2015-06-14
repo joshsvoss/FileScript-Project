@@ -4,12 +4,6 @@ public class MyFileScript {
 	
 	public static void main(String[] args) throws FileScriptException {
 		
-		// First validate the filepaths before you pass them on to the parser
-		//TODO How do I know the parser shouldn't validate the filepaths?  How do I know who should be responsible for what?
-		
-	
-		
-		
 		try {
 		
 			CommandParser parser =  new CommandParser(args);

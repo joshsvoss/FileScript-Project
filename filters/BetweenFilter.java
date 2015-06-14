@@ -2,12 +2,27 @@ package filters;
 
 import java.io.File;
 
+/** This filter matches files whose size is between the floor and roof double parameters.  
+ * 
+ * This class constructor will throw an InvalidFilterParamException if the paremeters passed 
+ * in are in any way not valid.  This will be caught and dealt with above in the parser.  
+ * @author Joshua Voss
+ *
+ */
 public class BetweenFilter implements Filter {
 	
 	private static final int K_BYTES = 1024; 
 	private double floor;
 	private double roof;
 
+	/** Between filter constructor.  This constructor throws an 
+	 * InvalidFilterParamException if the paremeters passed 
+	 * in are in any way not valid.  This will be caught and dealt with above in the parser.  
+	 * @param floorString to be converted into a double, lowest size value
+	 * @param roofString highest possible size value for the file
+	 * @throws InvalidFilterParamException if the parameters are out of order,
+	 * not numerical, or negative.  
+	 */
 	public BetweenFilter(String floorString, String roofString) throws InvalidFilterParamException {
 		try {
 			this.floor = Double.parseDouble(floorString) * K_BYTES;
@@ -33,8 +48,7 @@ public class BetweenFilter implements Filter {
 
 	@Override
 	public boolean doesPass(String filepath) {
-		File file = new File(filepath); //TODO do I have to deal with possibility of filepath being to a directory?
-										//TODO no exception can be thrown her from making a file of a nonexistent file?
+		File file = new File(filepath); 
 		
 		// If the file does not exist,
 		if (file.length() == 0L ) {
