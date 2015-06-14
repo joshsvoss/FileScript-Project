@@ -24,6 +24,12 @@ public class BetweenFilter implements Filter {
 	 * not numerical, or negative.  
 	 */
 	public BetweenFilter(String floorString, String roofString) throws InvalidFilterParamException {
+		
+		// Make sure the floorString and roofString aren't null:
+		if (floorString == null || floorString == null) {
+			throw new InvalidFilterParamException("String arg is null");
+		}
+		
 		try {
 			this.floor = Double.parseDouble(floorString) * K_BYTES;
 			this.roof = Double.parseDouble(roofString) * K_BYTES;

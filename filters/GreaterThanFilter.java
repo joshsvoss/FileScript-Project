@@ -2,11 +2,26 @@ package filters;
 
 import java.io.File;
 
+/** This class implements the GreaterThanFilter.
+ * @author Joshua Voss
+ *
+ */
 public class GreaterThanFilter implements Filter{
 	
+	private static final int ZERO = 0;
 	double floor;
 	
+	/** The constructor method.  
+	 * @param floorString converted to a double and is the minimum size for matching files 
+	 * (exclusive greater than).
+	 * @throws InvalidFilterParamException Thrown when floorString is null, not numerical, or negative
+	 */
 	public GreaterThanFilter(String floorString) throws InvalidFilterParamException { 
+		
+		// Make sure the floorString isn't null:
+		if (floorString == null) {
+			throw new InvalidFilterParamException("String arg is null");
+		}
 		
 		// Try to convert the string into an int, it it's not all numerical, 
 		// we have a  TypeI error
@@ -20,7 +35,7 @@ public class GreaterThanFilter implements Filter{
 		}
 		
 		// Make sure size floor isn't negative
-		if (this.floor < 0) {
+		if (this.floor < ZERO) {
 			throw new InvalidFilterParamException("The size parameter for the filter can't be negative.");
 		}
 	}

@@ -8,6 +8,9 @@ package filters;
 public class FilterFactory {
 	
 	
+	private static final int ONE_PARAM = 1;
+	private static final int TWO_PARAMS = 2;
+	private static final int BETWEEN_NUM_PARAMS = 3;
 	// Magic numbers
 	private static final int FIRST_INDEX = 0;
 	private static final int PARAM_ONE_INDEX = 1;
@@ -29,7 +32,7 @@ public class FilterFactory {
 		
 		// Check for the parameter "NOT"
 		boolean isFilterNegated = false;
-		if (paramList[paramList.length - 1].equals(NOT_STRING)) { // TODO Does this need to be magic number?  And can we assume that NOT will be in that spot?
+		if (paramList[paramList.length - ONE_PARAM].equals(NOT_STRING)) { // TODO Does this need to be magic number?  And can we assume that NOT will be in that spot?
 			// Then the filter needs to be negated.  Whatever filter it is:
 			isFilterNegated = true;
 		}
@@ -38,22 +41,23 @@ public class FilterFactory {
 		switch(paramList[FIRST_INDEX]){
 			case "greater_than":
 				// Make sure parameter list is long enough
-				if (paramList.length < 2) { //TODO is extra parameters also not acceptable?
-					// DUAA: EXTRA parameters (besides having one extra for "not" cause type II error in school solution and program just exits
+				if (paramList.length < TWO_PARAMS) { //TODO is extra parameters also not acceptable?
+					// DUAA: EXTRA parameters (besides having one extra for "not" cause type 
+					// II error in school solution and program just exits
 					throw new InsufficientParamsException();
 				}
 				filterToReturn = new GreaterThanFilter(paramList[PARAM_ONE_INDEX]);
 				
 				// If filter is to be negated, then put it inside the decorator NegFilter
 				if (isFilterNegated) {
-					filterToReturn = new NegFilter(filterToReturn);  // TODO This sorta recursive assignment works right?
+					filterToReturn = new NegFilter(filterToReturn);  
 				}
-				return filterToReturn; //TODO what about the param that needs to be somehow passed to the filter, should it just be passed to the method?
+				return filterToReturn; 
 				
 			case "between":
 				
 				// Make sure param list is of correct length
-				if (paramList.length < 3) { //TODO magic number here and above
+				if (paramList.length < BETWEEN_NUM_PARAMS) { 
 					throw new InsufficientParamsException();
 				}
 				
@@ -72,7 +76,7 @@ public class FilterFactory {
 			
 			case "smaller_than":
 				
-				if (paramList.length < 2) {
+				if (paramList.length < TWO_PARAMS) {
 					throw new InsufficientParamsException();
 				}
 				
@@ -88,7 +92,7 @@ public class FilterFactory {
 				
 			case "file":
 				
-				if (paramList.length < 1) {
+				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
 				
@@ -105,7 +109,7 @@ public class FilterFactory {
 				
 			case "contains": 
 				
-				if (paramList.length < 1) {
+				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
 				
@@ -120,7 +124,7 @@ public class FilterFactory {
 				
 			case "prefix":
 				
-				if (paramList.length < 1) {
+				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
 				
@@ -135,7 +139,7 @@ public class FilterFactory {
 				
 			case "suffix":
 				
-				if (paramList.length < 1) {
+				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
 				
@@ -150,7 +154,7 @@ public class FilterFactory {
 				
 				
 			case "writable":
-				if (paramList.length < 1) {
+				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
 				
@@ -164,7 +168,7 @@ public class FilterFactory {
 				return filterToReturn;
 				
 			case "executable":
-				if (paramList.length < 1) {
+				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
 				
@@ -178,7 +182,7 @@ public class FilterFactory {
 				return filterToReturn;
 				
 			case "hidden": 
-				if (paramList.length < 1) {
+				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
 				

@@ -9,6 +9,12 @@ public class SmallerThanFilter implements Filter {
 	private double roof;
 	
 	public SmallerThanFilter(String roofString) throws InvalidFilterParamException {
+		
+		// Make sure the roofString isn't null:
+		if (roofString == null) {
+			throw new InvalidFilterParamException("String arg is null");
+		}
+		
 		try {
 			this.roof = Double.parseDouble(roofString) * K_BYTES;
 		}
