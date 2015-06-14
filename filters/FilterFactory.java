@@ -38,7 +38,7 @@ public class FilterFactory {
 		
 		Filter filterToReturn;
 		switch(paramList[FIRST_INDEX]){
-			case "greater_than":
+			case "greater_than": //TODO turn into magic strings!
 				// Make sure parameter list is long enough
 				if (paramList.length < TWO_PARAMS) { //TODO is extra parameters also not acceptable?
 					// DUAA: EXTRA parameters (besides having one extra for "not" cause type 

@@ -85,7 +85,7 @@ public class CommandParser {
 		
 		try {
 			cmdScanner = new Scanner(cmdFile); 
-			ArrayList<Section> sectionArray = new ArrayList<Section>(); 
+			ArrayList<Section> sectionArray = new ArrayList<Section>(); //TODO delete this if not used?
 			
 			// But if we did succeed in finding the file, let's start to parse it.  
 			int lineNum = 0;
@@ -140,7 +140,7 @@ public class CommandParser {
 				
 				//Otherwise, process the oder param line
 				Order order;
-				if (cmdScanner.hasNextLine()) {
+				if (cmdScanner.hasNextLine()  ) {
 					String orderParamLine = cmdScanner.nextLine();
 					lineNum++;
 					paramList = orderParamLine.split(POUND_DELIMITER);

@@ -57,12 +57,10 @@ public class BetweenFilter implements Filter {
 		File file = new File(filepath); 
 		
 		// If the file does not exist,
-		if (file.length() == 0L ) {
-			return false;
-		}
-		else {
+		
+		
 			return (file.length() >= floor && file.length() <= roof);
-		}
+		
 	}
 
 }

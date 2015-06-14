@@ -53,7 +53,14 @@ public class Section {
 		// For each file in the source directory, if it passes the filter, 
 		// add it to the list.
 		File srcDirFile = new File(this.srcDir);
-		File[] fileArray = srcDirFile.listFiles();
+		File[] fileAndDirArray = srcDirFile.listFiles();
+		ArrayList<File> fileArray = new ArrayList<File>();
+		for (File fileOrDir: fileAndDirArray) {
+			if (fileOrDir.isFile()) {
+				fileArray.add(fileOrDir);
+			}
+				
+		}
 		
 		for (File curFile: fileArray) {
 			if (this.filter.doesPass(curFile.getAbsolutePath())) { //TODO seems silly to take the filepath of the File and pass that to something that will turn the filepath back into a File object
