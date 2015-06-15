@@ -7,6 +7,9 @@ package orders;
  */
 public class OrderFactory {
 	
+	private static final String ABS_STRING = "abs";
+	private static final String TYPE_STRING = "type";
+	private static final String SIZE_STRING = "size";
 	// Magic numbers
 	private static final int REVERSE_PARAM_INDEX = 1;
 	private final static int ORDER_NAME_INDEX = 0;
@@ -28,14 +31,14 @@ public class OrderFactory {
 		// Based on the name of the order create the corresponding Order instance
 		switch(orderName) {
 			
-		case "abs":
+		case ABS_STRING:
 			return new AbsoluteOrder(reverseParam);
 			// No "break" is needed here (it would be unreachable due to return)
 			
-		case "type":
+		case TYPE_STRING:
 			return new TypeOrder(reverseParam);
 			
-		case "size":
+		case SIZE_STRING:
 			return new SizeOrder(reverseParam);
 		
 		// Otherwise, the orderName doesn't match an order that we expect, 

@@ -16,8 +16,6 @@ public class SizeOrder extends Order {
 	}
 	
 
-	// TODO should I be returning bigger number depending on the size of the difference?  
-	// TODO is there a way to use a compareTo() of the longs returned?
 	/* This method is demanded by the interface Comparator and allows this comparator
 	 * to be used in Collections.sort().
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)

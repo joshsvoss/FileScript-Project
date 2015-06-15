@@ -17,12 +17,17 @@ import filters.FilterFactory;
  */
 public class CommandParser {
 
+	private static final String ORDER_STRING = "ORDER";
+	private static final String FILTER_STRING = "FILTER";
+	private static final int SPECIFIED_NUM_ARGS = 2;
 	// Magic numbers
 	private static final int CMD_FILE_INDEX = 1;
 	private static final int SRC_DIR_INDEX = 0;
 	private static final String POUND_DELIMITER = "#";
 	private static final String ABS_STRING = "abs";
 	private static final String ALL_STRING = "all";
+	private static final int RESET_LINE = 0;
+	
 	
 	
 	// Data fields:
@@ -38,7 +43,7 @@ public class CommandParser {
 	 */
 	public CommandParser(String[] args) throws TypeIIException {
 		
-		if (args.length != 2) { 
+		if (args.length != SPECIFIED_NUM_ARGS) { 
 			TypeIIException e = new TypeIIException();
 			throw e;
 		}
@@ -85,20 +90,20 @@ public class CommandParser {
 		
 		try {
 			cmdScanner = new Scanner(cmdFile); 
-			ArrayList<Section> sectionArray = new ArrayList<Section>(); //TODO delete this if not used?
+			ArrayList<Section> sectionArray = new ArrayList<Section>(); 
 			
 			// But if we did succeed in finding the file, let's start to parse it.  
-			int lineNum = 0;
+			int lineNum = RESET_LINE;
 			boolean alreadySawFilter = false;
-			int filterWarningLine = 0;
-			int orderWarningLine = 0;
+			int filterWarningLine = RESET_LINE;
+			int orderWarningLine = RESET_LINE;
 			while(cmdScanner.hasNextLine()) { 
 				
 				if (alreadySawFilter == false) {
 					// Read the first line, which must be "FILTER"
-					String firstSectionLine = cmdScanner.nextLine(); //TODO or should we just iterate until we find FILTER ?
+					String firstSectionLine = cmdScanner.nextLine(); 
 					lineNum++;
-					if (!firstSectionLine.equals("FILTER")) {
+					if (!firstSectionLine.equals(FILTER_STRING)) {
 						// If the first line isn't FILTER, we have incorrect command file syntax
 						cmdScanner.close();
 						throw new MissingSubSectionException(
@@ -114,7 +119,7 @@ public class CommandParser {
 				// Now let's see what filter we have:
 				if (!cmdScanner.hasNextLine()) {
 					cmdScanner.close();
-					throw new MissingSubSectionException("File ends after word 'FILTER'"); // TODO this shouldn't be allowed right? New Exception called EarlyEndOfFileException?
+					throw new MissingSubSectionException("File ends after word 'FILTER'"); 
 				}
 				// Otherwise, split the filter line by the "#" delimiter
 				String filterLine = cmdScanner.nextLine();
@@ -127,7 +132,6 @@ public class CommandParser {
 				catch (TypeIException e) {
 					// If you have a problem constructing the filter with the given params,
 					// Make a default one:
-//					e.printErrorMessage(lineNum); //TODO delete?
 					filterWarningLine = lineNum;
 					String[] defaultFilterList = {ALL_STRING};
 					filter = FilterFactory.buildFilter(defaultFilterList);
@@ -137,7 +141,7 @@ public class CommandParser {
 				if (cmdScanner.hasNextLine()) {
 					String orderLine = cmdScanner.nextLine();
 					lineNum++;
-					if (!orderLine.equals("ORDER")) { // TODO ARE magic strings considered magic numbers?
+					if (!orderLine.equals(ORDER_STRING)) { 
 						// If the  line isn't ORDER, we have incorrect command file syntax
 						cmdScanner.close();
 						throw new MissingSubSectionException("Line following Filter secion isn't 'ORDER'");
@@ -154,7 +158,7 @@ public class CommandParser {
 				if (cmdScanner.hasNextLine()  ) {
 					String orderParamLine = cmdScanner.nextLine();
 					
-					if(orderParamLine.equals("FILTER")) {
+					if(orderParamLine.equals(FILTER_STRING)) {
 						// Then order is missing the param line
 						// Then resort to the default order, all
 						String[] defaultOrderList = {ABS_STRING}; 
@@ -169,9 +173,8 @@ public class CommandParser {
 							order = OrderFactory.buildOrder(paramList);
 						}
 						catch (TypeIException e) {
-//							e.printErrorMessage(lineNum); //TODO delete?
 							orderWarningLine = lineNum;
-							String[] defaultOrderList = {ABS_STRING}; //TODO repitition here and below in the else
+							String[] defaultOrderList = {ABS_STRING}; 
 							order = OrderFactory.buildOrder(defaultOrderList);
 						}
 					
@@ -192,24 +195,17 @@ public class CommandParser {
 				
 				Section curSection = new Section(filter, order, srcDirPath, filterWarningLine, 
 						orderWarningLine);
-//				curSection.printSectionResults(); //TODO Delete?
-				//TODO DELTE what's below?
-				sectionArray.add( curSection ); //TODO should it pass the File srcDir instead of String filepath? Prob doesn't matter
+
+				sectionArray.add( curSection ); 
 				
 				
 				// Reset the warning line numbers to 0:
-				filterWarningLine = 0;
-				orderWarningLine = 0;
+				filterWarningLine = RESET_LINE;
+				orderWarningLine = RESET_LINE;
 			}
 			
-			// Now that we've initialized the sections and put them in an array, 
-			// have the sections print out their output
-			//TODO BELOW CAN NOW BE DELETED?
-//			while( ! sectionArray.isEmpty()) {
-//				Section curSection = sectionArray.remove(0);
-//				curSection.printSectionResults();
-//			}
-//			
+		
+			
 			// Make sure to close stream before method exits:
 			cmdScanner.close();
 
@@ -217,7 +213,7 @@ public class CommandParser {
 		}
 		catch (FileNotFoundException e) { 
 			// If we're here, that means the file didn't exist
-			throw new TypeIIException("The command file was not found"); //TODO should exception be more specific than just Type I?  
+			throw new TypeIIException("The command file was not found");  
 		}
 		
 		

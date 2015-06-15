@@ -36,7 +36,7 @@ public class BetweenFilter implements Filter {
 		}
 		catch(NumberFormatException e) {
 			throw new InvalidFilterParamException("The param passed to the greater_then filter"
-					+ " wasn't fully numerical."); //TODO repitition with greater_than constructor. Maybe use some inheritance to combine common functionality?
+					+ " wasn't fully numerical."); 
 		}
 		
 		// Make sure size bounds aren't negative

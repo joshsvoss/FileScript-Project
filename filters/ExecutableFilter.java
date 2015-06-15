@@ -31,10 +31,10 @@ public class ExecutableFilter implements Filter{
 		File file = new File(filepath);
 		
 		if (this.yes) {
-			return file.isHidden();
+			return file.canExecute();
 		}
 		else {
-			return !file.isHidden();
+			return !file.canExecute();
 		}
 	}
 

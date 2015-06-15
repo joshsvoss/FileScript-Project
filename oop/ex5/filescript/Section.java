@@ -69,7 +69,7 @@ public class Section {
 		}
 		
 		for (File curFile: fileArray) {
-			if (this.filter.doesPass(curFile.getAbsolutePath())) { //TODO seems silly to take the filepath of the File and pass that to something that will turn the filepath back into a File object
+			if (this.filter.doesPass(curFile.getAbsolutePath())) {
 				// Then add it to our data structure:
 				matchedFilesList.add(curFile);
 			}

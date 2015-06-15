@@ -16,7 +16,6 @@ public class ContainsFilter implements Filter {
 	 * @throws InvalidFilterParamException thrown if the string arg "filename" is null.
 	 */
 	public ContainsFilter(String filename) throws InvalidFilterParamException {
-		//TODO should null just be matched to a blank filename, or should it be an exception?
 		if (filename == null) {
 			throw new InvalidFilterParamException("String passed to constains filter is null");
 		}

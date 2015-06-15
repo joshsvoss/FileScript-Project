@@ -15,7 +15,7 @@ public class FileFilter implements Filter {
 	 * @throws InvalidFilterParamException thrown if the string filename is null.
 	 */
 	public FileFilter(String filename) throws InvalidFilterParamException {
-		//TODO should null just be matched to a blank filename, or should it be an exception?
+		
 		if (filename == null) {
 			throw new InvalidFilterParamException("String passed to file filter is null");
 		}

@@ -8,6 +8,17 @@ package filters;
 public class FilterFactory {
 	
 	// Magic numbers
+	private static final String GREATER_THAN_STRING = "greater_than";
+	private static final String BETWEEN_STRING = "between";
+	private static final String SMALLER_THAN_STRING = "smaller_than";
+	private static final String FILE_STRING = "file";
+	private static final String CONTAINS_STRING = "contains";
+	private static final String PREFIX_STRING = "prefix";
+	private static final String SUFFIX_STRING = "suffix";
+	private static final String WRITABLE_STRING = "writable";
+	private static final String EXECUTABLE_STRING = "executable";
+	private static final String HIDDEN_STRING = "hidden";
+	private static final String ALL_STRING = "all";
 	private static final int ONE_PARAM = 1;
 	private static final int TWO_PARAMS = 2;
 	private static final int BETWEEN_NUM_PARAMS = 3;
@@ -25,22 +36,19 @@ public class FilterFactory {
 	 */
 	public static Filter buildFilter(String[] paramList) throws oop.ex5.filescript.TypeIException {
 		
-		// TODO ZEEV: to avoid repitition of expected number of params checking, should I 
-		// TODO check them canonically based on the number of args they expect?
-		
 		
 		// Check for the parameter "NOT"
 		boolean isFilterNegated = false;
-		if (paramList[paramList.length - ONE_PARAM].equals(NOT_STRING)) { // TODO Does this need to be magic number?  And can we assume that NOT will be in that spot?
+		if (paramList[paramList.length - ONE_PARAM].equals(NOT_STRING)) { 
 			// Then the filter needs to be negated.  Whatever filter it is:
 			isFilterNegated = true;
 		}
 		
 		Filter filterToReturn;
 		switch(paramList[FIRST_INDEX]){
-			case "greater_than": //TODO turn into magic strings!
+			case GREATER_THAN_STRING: 
 				// Make sure parameter list is long enough
-				if (paramList.length < TWO_PARAMS) { //TODO is extra parameters also not acceptable?
+				if (paramList.length < TWO_PARAMS) { 
 					// DUAA: EXTRA parameters (besides having one extra for "not" cause type 
 					// II error in school solution and program just exits
 					throw new InsufficientParamsException();
@@ -53,7 +61,7 @@ public class FilterFactory {
 				}
 				return filterToReturn; 
 				
-			case "between":
+			case BETWEEN_STRING:
 				
 				// Make sure param list is of correct length
 				if (paramList.length < BETWEEN_NUM_PARAMS) { 
@@ -68,12 +76,8 @@ public class FilterFactory {
 				}
 				return filterToReturn;
 				
-				
-				
-				
-				  // TODO need to get rid of break statements, since they're unreachable?
 			
-			case "smaller_than":
+			case SMALLER_THAN_STRING:
 				
 				if (paramList.length < TWO_PARAMS) {
 					throw new InsufficientParamsException();
@@ -89,7 +93,7 @@ public class FilterFactory {
 				return filterToReturn;
 				
 				
-			case "file":
+			case FILE_STRING:
 				
 				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
@@ -106,7 +110,7 @@ public class FilterFactory {
 				
 				
 				
-			case "contains": 
+			case CONTAINS_STRING: 
 				
 				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
@@ -121,7 +125,7 @@ public class FilterFactory {
 				
 				return filterToReturn;
 				
-			case "prefix":
+			case PREFIX_STRING:
 				
 				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
@@ -136,7 +140,7 @@ public class FilterFactory {
 				
 				return filterToReturn;
 				
-			case "suffix":
+			case SUFFIX_STRING:
 				
 				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
@@ -152,7 +156,7 @@ public class FilterFactory {
 				return filterToReturn;
 				
 				
-			case "writable":
+			case WRITABLE_STRING:
 				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
@@ -166,7 +170,7 @@ public class FilterFactory {
 				
 				return filterToReturn;
 				
-			case "executable":
+			case EXECUTABLE_STRING:
 				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
@@ -180,7 +184,7 @@ public class FilterFactory {
 				
 				return filterToReturn;
 				
-			case "hidden": 
+			case HIDDEN_STRING: 
 				if (paramList.length < ONE_PARAM) {
 					throw new InsufficientParamsException();
 				}
@@ -194,7 +198,7 @@ public class FilterFactory {
 				
 				return filterToReturn;
 				
-			case "all":
+			case ALL_STRING:
 				filterToReturn = new AllFilter();
 				
 				// If filter is to be negated, then put it inside the decorator NegFilter
@@ -206,7 +210,7 @@ public class FilterFactory {
 				
 			// Otherwise, we've got a string that doesn't match what we expect
 			default:
-				//TODO what exception is supposed to occur here?
+				
 				throw new BadFilterNameException();
 				
 				

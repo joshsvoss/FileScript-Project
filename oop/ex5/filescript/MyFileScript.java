@@ -10,7 +10,7 @@ public class MyFileScript {
 	 * Usage: java MyFileScript <src Directory> <command filepath>
 	 * @throws FileScriptException
 	 */
-	public static void main(String[] args) throws FileScriptException { //TODO there should be any uncaught exception below no?
+	public static void main(String[] args) throws FileScriptException { 
 		
 		ArrayList<Section> sectionList;
 		try {

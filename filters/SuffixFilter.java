@@ -15,7 +15,6 @@ public class SuffixFilter implements Filter {
 	 * @throws InvalidFilterParamException thrown if suffix is null.
 	 */
 	public SuffixFilter(String suffix) throws InvalidFilterParamException {
-		//TODO should null just be matched to a blank filename, or should it be an exception?
 		if (suffix == null) {
 			throw new InvalidFilterParamException("String passed to suffix filter is null");
 		}

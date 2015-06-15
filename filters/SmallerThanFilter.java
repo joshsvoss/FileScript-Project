@@ -9,7 +9,7 @@ import java.io.File;
  */
 public class SmallerThanFilter implements Filter {
 	
-	private static final int K_BYTES = 1024; // TODO repitition, how can it share this with greater than and between?
+	private static final int K_BYTES = 1024; 
 	
 	private double roof;
 	
